@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="dragon-cate-system-web:war exploded">
+    <output-path>$PROJECT_DIR$/dragon-cate-system-web/target/dragon-cate-system-web</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="dragon-cate-system-web" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/dragon-cate-system-web/target/dragon-cate-system-web/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="dragon-cate-system-web/web/Web" />
+    </root>
+  </artifact>
+</component>
