@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "classpath:dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.auth.UserGroupMapper">
+
+	<resultMap id="userGroupMap" type="UserGroupDO">
+		<id column="id" property="id" jdbcType="DECIMAL" />
+		<result column="user_id" property="userId" jdbcType="DECIMAL" />
+		<result column="group_id" property="groupId" jdbcType="DECIMAL" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="DECIMAL" />
+		<result column="create_time" property="createTime" />
+
+		<result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
+		<result column="is_manager" property="manager" />
+	</resultMap>
+	<sql id="TABLE_NAME">
+        auth_user_group
+    </sql>
+    <sql id="GROUP_TABLE_NAME">
+        auth_group
+    </sql>
+    <sql id="USER_TABLE_NAME">
+        auth_user
+    </sql>
+    
+    <select id="getByUserIdAndGroupId" resultMap="userGroupMap" >
+    	select * from <include refid="TABLE_NAME" /> where user_id=#{userId} and group_id=#{groupId}
+    </select>
+	
+	<insert id="insertUserGroup" parameterType="UserGroupDO"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		<include refid="TABLE_NAME" /> (user_id,group_id,create_user_id,create_time,is_manager)
+		values(#{userId},#{groupId},#{createUserId},now(),#{manager})
+	</insert>
+	<update id="updateUserGroup" parameterType="UserGroupDO">
+		update <include refid="TABLE_NAME" /> set is_manager=#{manager} where id=#{id}
+	</update>
+	<delete id="deleteUserGroup">
+		delete from <include refid="TABLE_NAME" /> where id=#{id};
+	</delete>
+	<delete id="deleteByGroupId">
+		delete from <include refid="TABLE_NAME" /> where group_id=#{groupId}
+	</delete>
+	
+	<delete id="deleteByUserId">
+		delete from  <include refid="TABLE_NAME" /> where user_id=#{userId}
+	</delete>
+	
+	<select id="listByUserId" resultMap="userGroupMap">
+		select ug.*,g.group_name
+		group_name,u.account user_account,u.user_name user_name
+		from <include refid="TABLE_NAME" />
+		ug
+		left join <include refid="GROUP_TABLE_NAME" /> g on ug.group_id=g.id
+		left join <include refid="USER_TABLE_NAME" /> u on
+		ug.user_id=u.id
+		where user_id=#{userId}
+	</select>
+	<select id="listByGroupId" resultMap="userGroupMap">
+		select ug.*,g.group_name
+		group_name,u.account user_account,u.user_name user_name
+		from <include refid="TABLE_NAME" />
+		ug
+		left join <include refid="GROUP_TABLE_NAME" /> g on ug.group_id=g.id
+		left join <include refid="USER_TABLE_NAME" /> u on
+		ug.user_id=u.id
+		where group_id=#{groupId}
+	</select>
+</mapper>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+        namespace="titan.wms.common.dao.mapper.inbound.InboundDetailMapper">
+
+    <sql id="TABLE_NAME">
+		inbound_detail
+	</sql>
+
+    <sql id="INSERT_ALL_COLUMNS">
+		`purchase_id`, `inbound_id`, `purchase_no`, `inbound_no`,
+		`purchase_detail_seq`, `inbound_detail_seq`,`sku_code`,
+		`product_no`, `sku_barcode`, `sku_name`, `sku_desc`, `count`,
+		`received_count`, `good_count`, `bad_count`, `origin_country`, `parcel_no`,
+		 `weight`,`customs_code`,
+		`create_time`, `update_time`
+	</sql>
+
+    <sql id="SELECT_ALL_COLUMNS">
+        `id`,
+        <include refid="INSERT_ALL_COLUMNS"/>
+    </sql>
+
+    <resultMap id="inboundDetailMap" type="InboundDetailDO">
+        <result column="id" property="id"/>
+        <result column="purchase_id" property="purchaseId"/>
+        <result column="inbound_id" property="inboundId"/>
+        <result column="purchase_no" property="purchaseNo"/>
+        <result column="inbound_no" property="inboundNo"/>
+        <result column="purchase_detail_seq" property="purchaseDetailSeq"/>
+        <result column="inbound_detail_seq" property="inboundDetailSeq"/>
+        <result column="sku_code" property="skuCode"/>
+        <result column="product_no" property="productNo"/>
+        <result column="sku_barcode" property="skuBarcode"/>
+        <result column="sku_name" property="skuName"/>
+        <result column="sku_desc" property="skuDesc"/>
+        <result column="count" property="count"/>
+        <result column="received_count" property="receivedCount"/>
+        <result column="good_count" property="goodCount"/>
+        <result column="bad_count" property="badCount"/>
+        <result column="origin_country" property="originCountry"/>
+        <result column="parcel_no" property="parcelNo"/>
+        <result column="weight" property="weight"/>
+        <result column="customs_code" property="customsCode"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="addInboundDetails" parameterType="java.util.List">
+        INSERT INTO
+        <include refid="TABLE_NAME"/>
+        (
+        <include refid="INSERT_ALL_COLUMNS"/>
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index"
+                 separator=",">
+            (
+            #{item.purchaseId}, #{item.inboundId}, #{item.purchaseNo}, #{item.inboundNo},
+            #{item.purchaseDetailSeq},#{item.inboundDetailSeq},#{item.skuCode},
+            #{item.productNo},#{item.skuBarcode},#{item.skuName}, #{item.skuDesc}, #{item.count},
+            #{item.receivedCount}, #{item.goodCount}, #{item.badCount}, #{item.originCountry}, #{item.parcelNo},
+            #{item.weight},#{item.customsCode},
+            now(), now()
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateInboundDetail" parameterType="InboundDetailDO">
+        update
+        <include refid="TABLE_NAME"/>
+        <set>
+            <if test="skuCode != null and skuCode != ''">
+                sku_code = #{skuCode},
+            </if>
+            <if test="skuBarcode != null and skuBarcode != ''">
+                sku_barcode = #{skuBarcode},
+            </if>
+            <if test="skuName != null and skuName != ''">
+                sku_name = #{skuName},
+            </if>
+            <if test="skuDesc != null and skuDesc != ''">
+                sku_desc = #{skuDesc},
+            </if>
+            <if test="count != null ">
+                count = #{count},
+            </if>
+            <if test="receivedCount != null">
+                received_count = #{receivedCount},
+            </if>
+            <if test="goodCount != null">
+                good_count = #{goodCount},
+            </if>
+            <if test="badCount != null">
+                bad_count = #{badCount},
+            </if>
+            <if test="originCountry != null and originCountry != ''">
+                origin_country = #{originCountry},
+            </if>
+            <if test="parcelNo != null and parcelNo != ''">
+                parcel_no = #{parcelNo},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+            <if test="customsCode != null and customsCode != ''">
+                customs_code = #{customsCode},
+            </if>
+            update_time = now()
+        </set>
+        <where>
+            purchase_id = #{purchaseId}
+            <if test="skuCode != null and skuCode != ''">
+                and sku_code = #{skuCode}
+            </if>
+            <if test="inboundNo != null and inboundNo != ''">
+                and inbound_no = #{inboundNo}
+            </if>
+        </where>
+    </update>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        select COUNT(*) FROM
+        <include refid="TABLE_NAME"/>
+        <where>
+            <if test="purchaseNo != null and purchaseNo != ''">
+                purchase_no = #{purchaseNo}
+            </if>
+            <if test="inboundNo != null and inboundNo != ''">
+                inbound_no = #{inboundNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="getByInboundNoAndSkuBarcode" resultMap="inboundDetailMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        WHERE inbound_no = #{inboundNo} and sku_barcode = #{skuBarcode}
+    </select>
+
+    <select id="getInboundDetails" parameterType="InboundDetailDO"
+            resultMap="inboundDetailMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+            1 =1
+            <if test="purchaseId != null and purchaseId != 0">
+                and purchase_id=#{purchaseId}
+            </if>
+            <if test="purchaseNo != null and purchaseNo != ''">
+                and purchase_no=#{purchaseNo}
+            </if>
+            <if test="purchaseDetailSeq != null and purchaseDetailSeq>0">
+                and purchase_detail_seq = #{purchaseDetailSeq}
+            </if>
+            <if test="inboundDetailSeq != null and inboundDetailSeq>0">
+                and inbound_detail_seq = #{inboundDetailSeq}
+            </if>
+            <if test="skuCode != null and skuCode != ''">
+                and sku_code = #{skuCode}
+            </if>
+            <if test="productNo != null and productNo != ''">
+                and product_no = #{productNo}
+            </if>
+            <if test="skuBarcode != null and skuBarcode != ''">
+                and sku_barcode = #{skuBarcode}
+            </if>
+            <if test="skuName != null and skuName != '' ">
+                and sku_name = #{skuName}
+            </if>
+            <if test="inboundId != null and inboundId != 0">
+                and inbound_id = #{inboundId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getInboundDetailsByPurchaseInboundNo" resultMap="inboundDetailMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+            1=1
+            <if test="purchaseNo != null and purchaseNo != ''">
+                and purchase_no = #{purchaseNo}
+            </if>
+            <if test="inboundNo != null and inboundNo != ''">
+                and inbound_no = #{inboundNo}
+            </if>
+        </where>
+        ORDER BY inbound_detail_seq
+        <if test="limit != -1">limit #{limit} offset #{offset}</if>
+    </select>
+
+    <update id="increaseReceiveCount">
+        update
+        <include refid="TABLE_NAME"/>
+        set
+        received_count=received_count+#{receivedCount},good_count=good_count+#{goodCount},bad_count=bad_count+#{badCount}
+        <where>
+            inbound_id = #{inboundId} and sku_barcode=#{skuBarcode}
+        </where>
+    </update>
+
+    <update id="updateReceiveCountByInboundId">
+        update
+        <include refid="TABLE_NAME"/>
+        set received_count=#{receivedCount} , good_count=#{goodCount}, bad_count=#{badCount}
+        <where>
+            inbound_id = #{inboundId}
+        </where>
+    </update>
+
+    <select id="getInboundNoByBarcode" parameterType="java.lang.String" resultType="java.lang.String" >
+        select DISTINCT inbound_no from
+        <include refid="TABLE_NAME"/>
+        <where>
+            <if test="skuBarcode != null and skuBarcode !=''">
+               and  sku_barcode = #{skuBarcode}
+            </if>
+        </where>
+    </select>
+
+</mapper>

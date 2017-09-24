@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.sysconfig.SystemConfigMapper">
+
+    <sql id="tableName">
+        `basic_system_config`
+    </sql>
+
+    <sql id="columns">
+
+        `key`,
+        `name`,
+        `value`,
+        `operate_user_id`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <sql id="criteria">
+        <if test="criteria.key != null">AND `key` LIKE CONCAT('%', #{criteria.key} ,'%')</if>
+        <if test="criteria.name != null">AND `name` LIKE CONCAT('%', #{criteria.name} ,'%')</if>
+    </sql>
+
+    <resultMap id="SystemConfigResultMap"
+               type="SystemConfigDO">
+        <id property="id" column="id"/>
+        <result property="key" column="key"/>
+        <result property="name" column="name"/>
+        <result property="value" column="value"/>
+        <result property="operateUserId" column="operate_user_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="SystemConfigDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        <include refid="tableName"/>
+        (
+        <include refid="columns"/>
+        )
+        VALUES
+        (
+        #{key},
+        #{name},
+        #{value},
+        #{operateUserId},
+        NOW(),
+        NOW()
+        )
+    </insert>
+
+    <select id="getByKey" resultMap="SystemConfigResultMap">
+        SELECT * FROM
+        <include refid="tableName"/>
+        WHERE `key` = #{key}
+    </select>
+
+    <update id="update">
+        UPDATE
+        <include refid="tableName"/>
+        <set>
+            <if test="value != null">`value` = #{value},</if>
+            `update_time` = NOW(),
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+    <select id="listAll" resultMap="SystemConfigResultMap">
+        SELECT * FROM
+        <include refid="tableName"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="titan.wms.common.dao.mapper.sysconfig.CodingRuleMapper">
+	<resultMap id="codingRuleMap" type="CodingRuleDO">
+		<id column="id" property="id" />
+		<result column="code" property="code" />
+		<result column="name" property="name" />
+		<result column="expression" property="expression" />
+		<result column="current_value" property="currentValue" />
+		<result column="last_time" property="lastTime" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="version" property="version" />
+		<result column="user_id" property="userId" />	
+		<result column="create_count" property="createCount" />
+	</resultMap>
+	
+	<sql id="TABLE_NAME">
+		basic_coding_rule
+	</sql>
+
+	<insert id="insertRule" parameterType="CodingRuleDO"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT into
+		<include refid="TABLE_NAME" />
+		(
+			code,name,expression,current_value,
+			last_time,create_time,update_time,version,user_id,create_count
+		)
+		VALUES (
+		#{code}, #{name}, #{expression},#{currentValue},
+		#{lastTime}, now(), now(),#{version},#{userId},#{createCount}
+		)
+	</insert>
+
+	<select id="getById" resultMap="codingRuleMap">
+		select * from <include refid="TABLE_NAME" /> where id=#{id}
+	</select>	
+	
+	<select id="getByCode" resultMap="codingRuleMap">
+		select * from <include refid="TABLE_NAME" /> where code=#{code}
+	</select>
+	
+	<select id="getByCodeForUpdate" resultMap="codingRuleMap">
+		select * from <include refid="TABLE_NAME" /> where code=#{code} for update
+	</select>
+	
+	<select id="listAll" resultMap="codingRuleMap">
+		select * from <include refid="TABLE_NAME" />
+	</select>
+	
+	<update id="updateRuleWithLock" parameterType="CodingRuleDO">
+		update <include refid="TABLE_NAME" /> set
+		current_value=#{currentValue},last_time=#{lastTime},version=version+1,update_time=now(),create_count=create_count+1
+		where id=#{id} and version=#{version}
+	</update>
+	
+	<update id="updateRuleWithoutLock" parameterType="CodingRuleDO">
+		update <include refid="TABLE_NAME" /> set
+		name=#{name},expression=#{expression},update_time=now(),user_id=#{userId}
+		where id=#{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="titan.wms.common.dao.mapper.inbound.SerialNumberRecordMapper" >
+    <resultMap id="SerialNumberRecordResultMap" type="SerialNumberRecordDO" >
+        <result column="id" property="id"/>
+        <result column="sku_barcode" property="skuBarcode"/>
+        <result column="sku_serial_number" property="skuSerialNumber"/>
+        <result column="status" property="status"/>
+        <result column="purchase_no" property="purchaseNo"/>
+        <result column="client_code" property="clientCode"/>
+        <result column="collect_way" property="collectWay"/>
+        <result column="inbound_origin_order_id" property="inboundOriginOrderId"/>
+        <result column="inbound_type" property="inboundType"/>
+        <result column="outbound_origin_order_id" property="outboundOriginOrderId"/>
+        <result column="outbound_type" property="outboundType"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="TableName">
+        inbound_serial_number_record
+    </sql>
+
+    <sql id="BaseColumn" >
+        `sku_barcode`,
+        `sku_serial_number`,
+        `status`,
+        `purchase_no`,
+        `client_code`,
+        `collect_way`,
+        `inbound_origin_order_id`,
+        `inbound_type`,
+        `outbound_origin_order_id`,
+        `outbound_type`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <insert id="insert" parameterType="SerialNumberRecordDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{skuBarcode},
+          #{skuSerialNumber},
+          #{status},
+          #{purchaseNo},
+          #{clientCode},
+          #{collectWay},
+          #{inboundOriginOrderId},
+          #{inboundType},
+          #{outboundOriginOrderId},
+          #{outboundType},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+    <select id="getById" resultMap="SerialNumberRecordResultMap">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <select id="getBySkuBarcode" resultMap="SerialNumberRecordResultMap">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          sku_barcode = #{skuBarcode}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+</mapper>

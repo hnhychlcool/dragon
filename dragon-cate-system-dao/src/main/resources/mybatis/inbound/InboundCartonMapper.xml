@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.inbound.InboundCartonMapper" >
+    <resultMap id="BaseResult" type="InboundCartonDO" >
+        <result column="id" property="id"/>
+        <result column="sku_barcode" property="skuBarcode"/>
+        <result column="carton_name" property="cartonName"/>
+        <result column="internal_num" property="internalNum"/>
+        <result column="client_code" property="clientCode"/>
+        <result column="length" property="length"/>
+        <result column="width" property="width"/>
+        <result column="height" property="height"/>
+        <result column="volume" property="volume"/>
+        <result column="weight" property="weight"/>
+        <result column="is_support_original_delivery" property="supportOriginalDelivery"/>
+        <result column="layer_box_count" property="layerBoxCount"/>
+        <result column="layer_limit" property="layerLimit"/>
+        <result column="sku_code" property="skuCode"/>
+        <result column="sku_name" property="skuName"/>
+        <result column="weight_upper_limit" property="weightUpperLimit"/>
+        <result column="weight_lower_limit" property="weightLowerLimit"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_valid" property="valid"/>
+    </resultMap>
+
+    <sql id="TableName">
+        inbound_carton
+    </sql>
+
+    <sql id="BaseColumn" >
+        `sku_barcode`,
+        `carton_name`,
+        `internal_num`,
+        `client_code`,
+        `length`,
+        `width`,
+        `height`,
+        `volume`,
+        `weight`,
+        `is_support_original_delivery`,
+        `layer_box_count`,
+        `layer_limit`,
+        `sku_code`,
+        `sku_name`,
+        `weight_upper_limit`,
+        `weight_lower_limit`,
+        `create_time`,
+        `update_time`,
+        `is_valid`
+    </sql>
+
+
+    <sql id="AllColumn">
+        `id`,
+        <include refid="BaseColumn"/>
+    </sql>
+
+    <select id="countAllY" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TableName"/>
+        <where>
+            <if test="skuBarcode != null and skuBarcode != ''">
+                and sku_barcode like CONCAT('%', #{skuBarcode} ,'%')
+            </if>
+            <if test="skuCode != null and skuCode != ''">
+                and sku_code like CONCAT('%', #{skuCode} ,'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="countAllN" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TableName"/>
+        <where>
+            <if test="skuBarcode != null and skuBarcode != ''">
+                and sku_barcode like CONCAT('%', #{skuBarcode} ,'%')
+            </if>
+            <if test="skuCode != null and skuCode != ''">
+                and sku_code like CONCAT('%', #{skuCode} ,'%')
+            </if>
+            and is_valid =true
+        </where>
+    </select>
+
+    <select id="listCartonInfoY" resultMap="BaseResult">
+        select * from
+        <include refid="TableName"/>
+        <where>
+            <if test="skuBarcode != null and skuBarcode != ''">
+                and sku_barcode like CONCAT('%', #{skuBarcode} ,'%')
+            </if>
+            <if test="skuCode != null and skuCode != ''">
+                and sku_code like CONCAT('%', #{skuCode} ,'%')
+            </if>
+        </where>
+        <if test="limit != -1">limit #{limit} offset #{offset}</if>
+    </select>
+
+    <select id="listCartonInfoN" resultMap="BaseResult">
+        select * from
+        <include refid="TableName"/>
+        <where>
+            <if test="skuBarcode != null and skuBarcode != ''">
+                and sku_barcode like CONCAT('%', #{skuBarcode} ,'%')
+            </if>
+            <if test="skuCode != null and skuCode != ''">
+                and sku_code like CONCAT('%', #{skuCode} ,'%')
+            </if>
+            and is_valid =true
+        </where>
+        <if test="limit != -1">limit #{limit} offset #{offset}</if>
+    </select>
+
+    <select id="listClientSkuCartonInfos" resultMap="BaseResult">
+        SELECT * FROM
+        <include refid="TableName"/>
+        WHERE
+        1=1
+        <if test="clientCode != null and clientCode != ''">
+           AND client_code = #{clientCode}
+        </if>
+        <if test="skuBarcode != null and skuBarcode != ''">
+            AND sku_barcode = #{skuBarcode}
+        </if>
+    </select>
+
+    <update id="updateCartonInfo" parameterType="InboundCartonDO">
+        UPDATE
+        <include refid="TableName"/>
+        <set>
+            <if test="layerBoxCount != null">
+                layer_box_count = #{layerBoxCount},
+            </if>
+            <if test="layerLimit != null">
+                layer_limit = #{layerLimit},
+            </if>
+            <if test="length != null">
+                length = #{length},
+            </if>
+            <if test="width != null">
+                width = #{width},
+            </if>
+            <if test="height != null">
+                height = #{height},
+            </if>
+            <if test="volume != null">
+                volume = #{volume},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+            <if test="valid != null">
+                is_valid = #{valid},
+            </if>
+
+            update_time= now()
+        </set>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="skuBarcode != null">
+                and sku_barcode = #{skuBarcode}
+            </if>
+            <if test="clientCode != null">
+                and client_code = #{clientCode}
+            </if>
+            <if test="internalNum != null">
+                and internal_num = #{internalNum}
+            </if>
+
+
+        </where>
+    </update>
+
+
+    <update id="disable" parameterType="Long">
+        UPDATE
+        <include refid="TableName"/>
+        <set>
+            is_valid = false,
+            update_time= now()
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <update id="disableByBarcode" parameterType="String">
+        UPDATE
+        <include refid="TableName"/>
+        <set>
+            is_valid=false,
+            update_time= now()
+        </set>
+        <where>
+            sku_barcode = #{skuBarcode}
+        </where>
+    </update>
+
+
+    <insert id="insert" parameterType="InboundCartonDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{skuBarcode},
+          #{cartonName},
+          #{internalNum},
+          #{clientCode},
+          #{length},
+          #{width},
+          #{height},
+          #{volume},
+          #{weight},
+          #{supportOriginalDelivery},
+          #{layerBoxCount},
+          #{layerLimit},
+          #{skuCode},
+          #{skuName},
+          #{weightUpperLimit},
+          #{weightLowerLimit},
+          NOW(),
+          NOW(),
+          #{valid}
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+</mapper>

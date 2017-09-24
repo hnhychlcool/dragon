@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.basicInfo.GroupGoodsMapper" >
+    <resultMap id="BaseResult" type="GroupGoodsDO" >
+        <result column="id" property="id"/>
+        <result column="group_code" property="groupCode"/>
+        <result column="name" property="name"/>
+        <result column="packing_material_code" property="packingMaterialCode"/>
+        <result column="sku_count" property="skuCount"/>
+        <result column="total_count" property="totalCount"/>
+        <result column="is_enable" property="enable"/>
+        <result column="match_key" property="matchKey"/>
+        <result column="client_id" property="clientId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="VOResult" type="GroupGoodsVO" >
+        <result column="id" property="id"/>
+        <result column="group_code" property="groupCode"/>
+        <result column="name" property="name"/>
+        <result column="client_name" property="clientName"/>
+        <result column="packing_material_code" property="packingMaterialCode"/>
+        <result column="sku_count" property="skuCount"/>
+        <result column="total_count" property="totalCount"/>
+        <result column="is_enable" property="enable"/>
+    </resultMap>
+
+    <sql id="TableName">
+        outbound_group_goods
+    </sql>
+
+    <sql id="BaseColumn" >
+        `group_code`, 
+        `name`, 
+        `packing_material_code`, 
+        `sku_count`, 
+        `total_count`, 
+        `is_enable`, 
+        `match_key`, 
+        `client_id`, 
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <select id="listByCondition" resultMap="VOResult">
+        SELECT
+          gg.id,
+          gg.group_code,
+          gg.name,
+          cm.`name` client_name,
+          gg.packing_material_code,
+          gg.sku_count,
+          gg.total_count,
+          gg.is_enable
+        FROM
+          <include refid="TableName" /> AS gg
+        JOIN outbound_group_goods_item AS ggi ON gg.id = ggi.group_id
+        LEFT JOIN basic_client_master AS cm ON gg.client_id = cm.id
+        WHERE
+          1 = 1
+        <if test="condition.groupCode != null and condition.groupCode != ''">
+          AND gg.group_code LIKE CONCAT('%', #{condition.groupCode}, '%')
+        </if>
+        <if test="condition.name != null and condition.name != ''">
+          AND gg.name LIKE CONCAT('%', #{condition.name}, '%')
+        </if>
+        <if test="condition.clientId != null">
+          AND gg.clientId = #{condition.clientId}
+        </if>
+        <if test="condition.updateTimeBegin != null">
+          AND gg.update_time &gt;= #{condition.updateTimeBegin}
+        </if>
+        <if test="condition.updateTimeEnd != null">
+          AND gg.update_time &lt;= #{condition.updateTimeEnd}
+        </if>
+        <if test="condition.enable != null">
+          AND gg.is_enable = #{condition.enable}
+        </if>
+        <if test="condition.skuBarcode != null and condition.skuBarcode != ''">
+          AND ggi.sku_barcode LIKE CONCAT('%', #{condition.skuBarcode}, '%')
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="GroupGoodsDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" />(<include refid="BaseColumn" />)
+        VALUES(
+          #{groupCode},
+          #{name},
+          #{packingMaterialCode},
+          #{skuCount},
+          #{totalCount},
+          #{enable},
+          #{matchKey},
+          #{clientId},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+
+    <delete id="batchDelete">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE id IN
+        <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+    </delete>
+
+    <update id="batchEnable">
+        UPDATE
+          <include refid="TableName" />
+        SET
+          is_enable = TRUE
+        WHERE id IN
+        <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+    </update>
+
+    <update id="batchDisable">
+        UPDATE
+        <include refid="TableName" />
+        SET
+        is_enable = FALSE
+        WHERE id IN
+        <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+    </update>
+</mapper>

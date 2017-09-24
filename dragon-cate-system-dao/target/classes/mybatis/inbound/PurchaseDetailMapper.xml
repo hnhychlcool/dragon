@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.inbound.PurchaseDetailMapper">
+
+    <sql id="TABLE_NAME">
+        inbound_purchase_detail
+    </sql>
+
+    <sql id="INSERT_ALL_COLUMNS">
+        `purchase_id`, `purchase_no`, `purchase_detail_seq`, `sku_code`, `product_no`,
+        `sku_barcode`, `sku_name`, `sku_desc`, `count`,
+        `received_count`, `origin_country`, `parcel_no`, `weight`,`customs_code`,
+        `create_time`, `update_time`
+    </sql>
+
+    <sql id="SELECT_ALL_COLUMNS">
+        `id`,
+        <include refid="INSERT_ALL_COLUMNS"/>
+    </sql>
+
+    <resultMap id="purchaseDetailMap" type="PurchaseDetailDO">
+        <result column="id" property="id"/>
+        <result column="purchase_id" property="purchaseId"/>
+        <result column="purchase_no" property="purchaseNo"/>
+        <result column="purchase_detail_seq" property="purchaseDetailSeq"/>
+        <result column="sku_code" property="skuCode"/>
+        <result column="product_no" property="productNo"/>
+        <result column="sku_barcode" property="skuBarcode"/>
+        <result column="sku_name" property="skuName"/>
+        <result column="sku_desc" property="skuDesc"/>
+        <result column="count" property="count"/>
+        <result column="received_count" property="receivedCount"/>
+        <result column="origin_country" property="originCountry"/>
+        <result column="parcel_no" property="parcelNo"/>
+        <result column="weight" property="weight"/>
+        <result column="customs_code" property="customsCode"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="addPurchaseDetails" parameterType="java.util.List">
+        INSERT into
+        <include refid="TABLE_NAME"/>
+        (
+        <include refid="INSERT_ALL_COLUMNS"/>
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.purchaseId}, #{item.purchaseNo}, #{item.purchaseDetailSeq}, #{item.skuCode},
+            #{item.productNo},
+            #{item.skuBarcode}, #{item.skuName}, #{item.skuDesc}, #{item.count},
+            #{item.receivedCount}, #{item.originCountry}, #{item.parcelNo}, #{item.weight},
+            #{item.customsCode},
+            now(), now())
+        </foreach>
+
+    </insert>
+
+    <update id="updatePurchaseDetail" parameterType="PurchaseDetailDO">
+            update
+            <include refid="TABLE_NAME"/>
+            <set>
+                <if test="skuCode != null and skuCode != ''">
+                    sku_code = #{skuCode},
+                </if>
+                <if test="productNo != null and productNo != ''">
+                    product_no = #{productNo},
+                </if>
+                <if test="skuBarcode != null and skuBarcode != ''">
+                    sku_barcode = #{skuBarcode},
+                </if>
+                <if test="skuName != null and skuName != ''">
+                    sku_name = #{skuName},
+                </if>
+                <if test="skuDesc != null and skuDesc != ''">
+                    sku_desc = #{skuDesc},
+                </if>
+                <if test="count != null">
+                    count = #{count},
+                </if>
+                <if test="receivedCount != null">
+                    received_count = #{receivedCount},
+                </if>
+                <if test="originCountry != null and originCountry != ''">
+                    origin_country = #{originCountry},
+                </if>
+                <if test="parcelNo != null and parcelNo != ''">
+                    parcel_no = #{parcelNo},
+                </if>
+                <if test="weight != null">
+                    weight = #{weight},
+                </if>
+                <if test="customsCode != null and customsCode != ''">
+                    customs_code = #{customsCode},
+                </if>
+                update_time = now()
+            </set>
+            <where>
+                1=1
+                <if test="purchaseNo != null and purchaseNo != ''">
+                    and purchase_no = #{purchaseNo}
+                </if>
+                <if test="skuCode != null and skuCode != ''">
+                    and sku_code = #{skuCode}
+                </if>
+            </where>
+    </update>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TABLE_NAME"/>
+        WHERE purchase_no = #{purchaseNo}
+    </select>
+
+
+    <select id="getPurchaseDetails" parameterType="PurchaseDetailDO" resultMap="purchaseDetailMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+            <if test="purchaseNo != null and purchaseNo !=''">
+                purchase_no = #{purchaseNo}
+            </if>
+        </where>
+        order by purchase_detail_seq
+        <if test="limit != -1">limit #{limit} offset #{offset}</if>
+    </select>
+
+
+    <select id="getPurchaseNoBySkuBarcode" parameterType="java.lang.String" resultType="java.lang.String" >
+        select DISTINCT purchase_no from
+        <include refid="TABLE_NAME"/>
+        <where>
+            <if test="skuBarcode != null and skuBarcode !=''">
+                and sku_barcode = #{skuBarcode}
+            </if>
+        </where>
+    </select>
+
+
+    <update id="increaseReceiveCount">
+        update
+        <include refid="TABLE_NAME"/>
+        set received_count=received_count+#{receivedCount}
+        <where>
+            purchase_id = #{purchaseId} and sku_barcode=#{skuBarcode}
+        </where>
+    </update>
+    <update id="updateReceiveCountByPurchaseId">
+        update
+        <include refid="TABLE_NAME"/>
+        set received_count=#{receivedCount}
+        <where>
+            purchase_id = #{purchaseId}
+        </where>
+    </update>
+
+
+</mapper>

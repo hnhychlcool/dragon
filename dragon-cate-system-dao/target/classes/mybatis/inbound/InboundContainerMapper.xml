@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.inbound.InboundContainerMapper">
+
+    <resultMap id="InboundContainerResultMap" type="InboundContainerDO">
+        <result column="id" property="id"/>
+        <result column="inbound_no" property="inboundNo"/>
+        <result column="container_code" property="containerCode"/>
+        <result column="bussiness_type" property="bussinessType"/>
+        <result column="inbound_status" property="inboundStatus"/>
+        <result column="stored_volume" property="storedVolume"/>
+        <result column="stored_weight" property="storedWeight"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="use_type" property="useType"/>
+    </resultMap>
+
+    <sql id="TableName">
+        inbound_container
+    </sql>
+
+    <sql id="BaseColumn">
+        `inbound_no`,
+        `container_code`,
+        `bussiness_type`,
+        `inbound_status`,
+        `stored_volume`,
+        `stored_weight`,
+        `create_time`,
+        `update_time`,
+        `use_type`
+    </sql>
+
+    <insert id="insert" parameterType="InboundContainerDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="TableName"/>
+        (<include refid="BaseColumn"/>)
+        VALUES(
+        #{inboundNo},
+        #{containerCode},
+        #{bussinessType},
+        #{inboundStatus},
+        #{storedVolume},
+        #{storedWeight},
+        NOW(),
+        NOW(),
+        #{useType}
+        )
+    </insert>
+
+    <select id="getById" resultMap="InboundContainerResultMap">
+        SELECT
+        id,
+        <include refid="BaseColumn"/>
+        FROM
+        <include refid="TableName"/>
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="getByCode" resultMap="InboundContainerResultMap">
+        SELECT
+        id,
+        <include refid="BaseColumn"/>
+        FROM
+        <include refid="TableName"/>
+        WHERE
+        container_code = #{containerCode}
+    </select>
+
+    <update id="updateMeasureInfoByCode">
+        update
+        <include refid="TableName"/>
+        <set>
+            update_time = now()
+            <if test="volume != null">
+                ,stored_volume += volume
+            </if>
+            <if test="weight != null">
+                , stored_weight += weight
+            </if>
+        </set>
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+        <include refid="TableName"/>
+        WHERE
+        id = #{id}
+    </delete>
+</mapper>

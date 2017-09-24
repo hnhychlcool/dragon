@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.basicInfo.ConveyorBeltMapper" >
+    <resultMap id="BaseResult" type="ConveyorBeltDO" >
+        <result column="id" property="id"/>
+        <result column="logical_address" property="logicalAddress"/>
+        <result column="logical_address_describe" property="logicalAddressDescribe"/>
+        <result column="physical_address" property="physicalAddress"/>
+        <result column="zone_code" property="zoneCode"/>
+        <result column="location_code" property="locationCode"/>
+        <result column="batch_code" property="batchCode"/>
+        <result column="container_code" property="containerCode"/>
+        <result column="container_count" property="containerCount"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="is_enable" property="enable"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="TableName">
+        basic_conveyor_belt
+    </sql>
+
+    <sql id="BaseColumn" >
+        `logical_address`,
+        `logical_address_describe`,
+        `physical_address`,
+        `zone_code`,
+        `location_code`,
+        `batch_code`,
+        `container_code`,
+        `container_count`,
+        `type`,
+        `status`,
+        `is_enable`,
+        `remark`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <insert id="insert" parameterType="ConveyorBeltDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{logicalAddress},
+          #{logicalAddressDescribe},
+          #{physicalAddress},
+          #{zoneCode},
+          #{locationCode},
+          NULL,
+          NULL,
+          0,
+          #{type},
+          #{status},
+          #{enable},
+          #{remark},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+    <update id="updateConveyorBelt" parameterType="ConveyorBeltDO">
+        UPDATE
+            <include refid="TableName" />
+        <set>
+            <if test="logicalAddressDescribe != null and logicalAddressDescribe != ''"> `logical_address_describe` = #{logicalAddressDescribe}, </if>
+            `zone_code` = #{zoneCode},
+            `location_code` = #{locationCode},
+            `batch_code` = #{batchCode},
+            `container_code` = #{containerCode},
+            `container_count` = #{containerCount},
+            `remark` = #{remark},
+            `type` = #{type},
+            `status` = #{status},
+            `is_enable` = #{enable},
+            `update_time` = NOW(),
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+
+    <select id="getList" resultMap="BaseResult">
+        SELECT
+            id, <include refid="BaseColumn" />
+        FROM
+            <include refid="TableName"/>
+        WHERE
+            1 = 1
+            <if test="condition.logicalAddress != null and condition.logicalAddress != ''">
+                AND logical_address LIKE CONCAT('%',#{condition.logicalAddress},'%')
+            </if>
+            <if test="condition.logicalAddressDescribe != null and condition.logicalAddressDescribe != ''">
+                AND logical_address_describe LIKE CONCAT('%',#{condition.logicalAddressDescribe},'%')
+            </if>
+            <if test="condition.physicalAddress != null and condition.physicalAddress != ''">
+                AND physical_address LIKE CONCAT('%',#{condition.physicalAddress},'%')
+            </if>
+            <if test="condition.status != null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.type != null">
+                AND type = #{condition.type}
+            </if>
+            <if test="condition.enable != null">
+                AND is_enable = #{condition.enable}
+            </if>
+    </select>
+
+    <update id="batchEnableById">
+        UPDATE
+            <include refid="TableName" />
+        SET
+            is_enable = true
+        WHERE id IN
+            <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+    </update>
+
+    <update id="batchDisableById">
+        UPDATE
+            <include refid="TableName" />
+        SET
+            is_enable = false,
+            status = #{status},
+            batch_code = "",
+            container_code = "",
+            container_count = 0
+        WHERE id IN
+            <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+    </update>
+
+    <select id="getCountByIdsAndStatus" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            <include refid="TableName"/>
+        WHERE
+            status = #{status}
+            AND id IN
+                <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+    </select>
+</mapper>

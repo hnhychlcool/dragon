@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.inbound.PurchaseTitleMapper">
+
+    <sql id="TABLE_NAME">
+        inbound_purchase_title
+    </sql>
+
+    <sql id="INSERT_ALL_COLUMNS">
+        `purchase_no`, `purchase_type`, `status`, `client_id`, `client_code`,
+        `client_name`, `contract_no`, `carrier_code`, `carrier_name`,
+        `logistics_num`, `expected_arrival_date`, `supplier_code`, `supplier_name`,
+        `supply_type`, `count`, `received_count`, `remark`,
+        `create_time`, `update_time`,`inspection_no`
+    </sql>
+
+    <sql id="SELECT_ALL_COLUMNS">
+        `id`,
+        <include refid="INSERT_ALL_COLUMNS"/>
+    </sql>
+
+    <resultMap id="purchaseTitleMap" type="PurchaseTitleDO">
+        <result column="id" property="id"/>
+        <result column="purchase_no" property="purchaseNo"/>
+        <result column="purchase_type" property="purchaseType"/>
+        <result column="status" property="status"/>
+        <result column="client_id" property="clientId"/>
+        <result column="client_code" property="clientCode"/>
+        <result column="client_name" property="clientName"/>
+        <result column="contract_no" property="contractNo"/>
+        <result column="carrier_code" property="carrierCode"/>
+        <result column="carrier_name" property="carrierName"/>
+        <result column="logistics_num" property="logisticsNum"/>
+        <result column="expected_arrival_date" property="expectedArrivalDate"/>
+        <result column="supplier_code" property="supplierCode"/>
+        <result column="supplier_name" property="supplierName"/>
+        <result column="supply_type" property="supplyType"/>
+        <result column="count" property="count"/>
+        <result column="received_count" property="receivedCount"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="inspection_no" property="inspectionNo"/>
+    </resultMap>
+
+    <insert id="addPurchaseTitle" parameterType="PurchaseTitleDO" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT into
+        <include refid="TABLE_NAME"/>
+        (
+        <include refid="INSERT_ALL_COLUMNS"/>
+        )
+        VALUES (#{purchaseNo}, #{purchaseType}, #{status}, #{clientId}, #{clientCode},
+        #{clientName}, #{contractNo}, #{carrierCode}, #{carrierName},
+        #{logisticsNum}, #{expectedArrivalDate}, #{supplierCode}, #{supplierName},
+        #{supplyType}, #{count}, #{receivedCount}, #{remark},
+        now(), now(),#{inspectionNo})
+    </insert>
+
+    <select id="getPurchaseTitleByPurchaseNo" resultMap="purchaseTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        WHERE purchase_no = #{purchaseNo}
+    </select>
+
+    <select id="isExisted" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TABLE_NAME"/>
+        WHERE purchase_no=#{purchaseNo}
+    </select>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TABLE_NAME"/>
+        <where>
+
+            <if test="purchaseNo != null and purchaseNo != ''">
+                and purchase_no like CONCAT('%', #{purchaseNo} ,'%')
+            </if>
+            <if test="purchaseType != null and purchaseType != 0">
+                and purchase_type = #{purchaseType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="clientCode != null and clientCode != ''">
+                and client_code = #{clientCode}
+            </if>
+            <if test="clientName != null and clientName != ''">
+                and client_name like CONCAT('%', #{clientName} ,'%')
+            </if>
+            <if test="carrierCode != null and carrierCode != ''">
+                and carrier_code = #{carrierCode}
+            </if>
+            <if test="carrierName != null and carrierName !=''">
+                and carrier_name like CONCAT('%', #{carrierName} ,'%')
+            </if>
+            <if test="logisticsNum != null and logisticsNum != ''">
+                and logistics_num = #{logisticsNum}
+            </if>
+            <if test="supplierCode != null and supplierCode != ''">
+                and supplier_code = #{supplierCode}
+            </if>
+            <if test="supplierName != null and supplierName != ''">
+                and supplier_name like CONCAT('%', #{supplierName} ,'%')
+            </if>
+            <if test="supplyType != null and supplyType != 0">
+                and supply_type = #{supplyType}
+            </if>
+        </where>
+    </select>
+
+    <update id="updatePurchaseTitle" parameterType="PurchaseTitleDO">
+        UPDATE
+        <include refid="TABLE_NAME"/>
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="clientCode != null and clientCode != ''">
+                client_code = #{clientCode},
+            </if>
+            <if test="clientName != null and clientName != ''">
+                client_name = #{clientName},
+            </if>
+            <if test="contractNo != null and contractNo != ''">
+                contract_no = #{contractNo},
+            </if>
+            <if test="carrierCode != null and carrierCode != ''">
+                carrier_code = #{carrierCode},
+            </if>
+            <if test="carrierName != null and carrierName != ''">
+                carrier_name = #{carrierName},
+            </if>
+            <if test="logisticsNum != null and logisticsNum != ''">
+                logistics_num = #{logisticsNum},
+            </if>
+            <if test="expectedArrivalDate != null">
+                expected_arrival_date = #{expectedArrivalDate},
+            </if>
+            <if test="supplierCode != null and supplierCode != ''">
+                supplier_code = #{supplierCode},
+            </if>
+            <if test="supplierName != null and supplierName != ''">
+                supplier_name = #{supplierName},
+            </if>
+            <if test="supplyType != null">
+                supply_type = #{supplyType},
+            </if>
+            <if test="count != null">
+                count = #{count},
+            </if>
+            <if test="receivedCount != null">
+                received_count = #{receivedCount},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            update_time= now()
+        </set>
+        <where>
+
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="purchaseNo != null">
+                and purchase_no = #{purchaseNo}
+            </if>
+        </where>
+    </update>
+
+    <update id="updateInspectionByPurchaseNo" parameterType="java.lang.String">
+        UPDATE
+        <include refid="TABLE_NAME"/>
+        <set>
+            <if test="inspectionNo != null">
+                inspection_no = #{inspectionNo},
+            </if>
+            update_time= now()
+        </set>
+        <where>
+            <if test="purchaseNo != nulland purchaseNo != ''">
+                and purchase_no = #{purchaseNo}
+            </if>
+        </where>
+    </update>
+
+    <select id="listPurchaseTitleInfo" resultMap="purchaseTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+
+            <if test="purchaseNo != null and purchaseNo !='' ">
+                and purchase_no like CONCAT('%', #{purchaseNo} ,'%')
+            </if>
+            <if test="purchaseType != null">
+                and purchase_type = #{purchaseType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="clientCode != null and clientCode != '' ">
+                and client_code like CONCAT('%', #{clientCode} ,'%')
+            </if>
+            <if test="clientName != null and clientName != '' ">
+                and client_name like CONCAT('%', #{clientName} ,'%')
+            </if>
+            <if test="contractNo != null and contractNo != '' ">
+                and contract_no like CONCAT('%', #{contractNo} ,'%')
+            </if>
+            <if test="carrierCode != null and carrierCode != ''">
+                and carrier_code like CONCAT('%', #{carrierCode} ,'%')
+            </if>
+            <if test="carrierName != null and carrierName != '' ">
+                and carrier_name like CONCAT('%', #{carrierName} ,'%')
+            </if>
+            <if test="logisticsNum != null and logisticsNum != '' ">
+                and logistics_num like CONCAT('%', #{logisticsNum} ,'%')
+            </if>
+            <if test="supplierCode != null and supplierCode != '' ">
+                and supplier_code like CONCAT('%', #{supplierCode} ,'%')
+            </if>
+            <if test="supplierName != null and supplierName != '' ">
+                and supplier_name like CONCAT('%', #{supplierName} ,'%')
+            </if>
+            <if test="supplyType != null">
+                and supply_type = #{supplyType}
+            </if>
+        </where>
+        <if test="limit != -1">limit #{limit} offset #{offset}</if>
+    </select>
+
+    <select id="listPurchaseTitleInfoNoPage" resultMap="purchaseTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+
+            <if test="purchaseNo != null and purchaseNo !='' ">
+                and purchase_no like CONCAT('%', #{purchaseNo} ,'%')
+            </if>
+            <if test="purchaseType != null">
+                and purchase_type = #{purchaseType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="clientCode != null and clientCode != '' ">
+                and client_code like CONCAT('%', #{clientCode} ,'%')
+            </if>
+            <if test="clientName != null and clientName != '' ">
+                and client_name like CONCAT('%', #{clientName} ,'%')
+            </if>
+            <if test="contractNo != null and contractNo != '' ">
+                and contract_no like CONCAT('%', #{contractNo} ,'%')
+            </if>
+            <if test="carrierCode != null and carrierCode != ''">
+                and carrier_code like CONCAT('%', #{carrierCode} ,'%')
+            </if>
+            <if test="carrierName != null and carrierName != '' ">
+                and carrier_name like CONCAT('%', #{carrierName} ,'%')
+            </if>
+            <if test="logisticsNum != null and logisticsNum != '' ">
+                and logistics_num like CONCAT('%', #{logisticsNum} ,'%')
+            </if>
+            <if test="supplierCode != null and supplierCode != '' ">
+                and supplier_code like CONCAT('%', #{supplierCode} ,'%')
+            </if>
+            <if test="supplierName != null and supplierName != '' ">
+                and supplier_name like CONCAT('%', #{supplierName} ,'%')
+            </if>
+            <if test="supplyType != null">
+                and supply_type = #{supplyType}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultMap="purchaseTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        where id=#{id}
+    </select>
+
+    <update id="increaseReceiveCount">
+        update
+        <include refid="TABLE_NAME"/>
+        set received_count=(received_count+#{skuCount}) where
+        id=#{purchaseTitleId}
+    </update>
+
+
+</mapper>

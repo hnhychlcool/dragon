@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.inside.StocktakingUserMapper" >
+    <resultMap id="BaseResult" type="StocktakingUserDO" >
+        <result column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="stocktaking_code" property="stocktakingCode"/>
+        <result column="stocktaking_seq" property="stocktakingSeq"/>
+        <result column="status" property="status"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="TableName">
+        inside_stocktaking_user
+    </sql>
+
+    <sql id="BaseColumn" >
+        `user_id`,
+        `user_name`,
+        `stocktaking_code`,
+        `stocktaking_seq`,
+        `status`,
+        `operator_id`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <insert id="insert" parameterType="StocktakingUserDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{userId},
+          #{userName},
+          #{stocktakingCode},
+          #{stocktakingSeq},
+          #{status},
+          #{operatorId},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+
+    <delete id="deleteByStocktakingCode">
+        DELETE FROM <include refid="TableName"/>  WHERE stocktakingCode = #{stocktakingCode}
+    </delete>
+
+    <select id="validateStocktakingUser" resultType="java.lang.Integer">
+        SELECT count(1) from inside_stocktaking_task t inner join <include refid="TableName"/> u on t.stocktaking_code = u.stocktaking_code where t.status = #{status} and u.user_id = #{userId}
+    </select>
+
+</mapper>

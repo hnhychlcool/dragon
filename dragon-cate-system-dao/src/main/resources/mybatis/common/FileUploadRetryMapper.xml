@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "classpath:dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="titan.wms.common.dao.mapper.common.FileUploadRetryMapper">
+
+	<resultMap id="resultMap" type="FileUploadRetryDO">
+		<id column="id" property="id" jdbcType="DECIMAL" />
+		<result column="unique_filename" property="uniqueFilename" />
+		<result column="file_metadata" property="fileMetadata" />
+		<result column="content" property="content" />
+		<result column="retry_count" property="retryCount" />
+	</resultMap>
+	<sql id="TABLE_NAME">
+		common_file_upload_retry
+	</sql>
+	<select id="getByUniqueFilename" resultMap="resultMap">
+		select * from <include refid="TABLE_NAME" /> where unique_filename=#{uniqueFilename}
+	</select>
+	<insert id="insert" parameterType="FileUploadRetryDO" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		<include refid="TABLE_NAME" />
+		(
+		unique_filename,file_metadata,content,retry_count,
+		update_time,create_time
+		)
+		values
+		(
+		#{uniqueFilename},#{fileMetadata},#{content},#{retryCount},
+		now(),now()
+		)
+	</insert>
+	<update id="addRetryCount">
+		update <include refid="TABLE_NAME" /> set
+		retry_count=retry_count+#{count},update_time=now()
+		where unique_filename=#{uniqueFilename}
+	</update>
+	<delete id="delete">
+		delete from <include refid="TABLE_NAME" />
+		where unique_filename=#{uniqueFilename}
+	</delete>
+</mapper>

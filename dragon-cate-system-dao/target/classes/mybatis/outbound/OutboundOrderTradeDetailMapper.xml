@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.outbound.OutboundOrderTradeDetailMapper" >
+    <resultMap id="BaseResult" type="OutboundOrderTradeDetailDO" >
+        <result column="id" property="id"/>
+        <result column="order_id" property="orderId"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="packing_type" property="packingType"/>
+        <result column="invoice" property="invoice"/>
+        <result column="receiver_zip" property="receiverZip"/>
+        <result column="receiver_province" property="receiverProvince"/>
+        <result column="receiver_city" property="receiverCity"/>
+        <result column="receiver_country" property="receiverCountry"/>
+        <result column="receiver_address" property="receiverAddress"/>
+        <result column="receiver_identity_front_url" property="receiverIdentityFrontUrl"/>
+        <result column="receiver_identity_back_url" property="receiverIdentityBackUrl"/>
+        <result column="receiver_identity_no" property="receiverIdentityNo"/>
+        <result column="receiver_mobile" property="receiverMobile"/>
+        <result column="receiver_telephone" property="receiverTelephone"/>
+        <result column="purchaser_account" property="purchaserAccount"/>
+        <result column="purchaser_name" property="purchaserName"/>
+        <result column="logistic_bill" property="logisticBill"/>
+        <result column="logistic_remark" property="logisticRemark"/>
+        <result column="payment_no" property="paymentNo"/>
+        <result column="pay_company_name" property="payCompanyName"/>
+        <result column="eb_platform_code" property="ebPlatformCode"/>
+        <result column="eb_platform_domain" property="ebPlatformDomain"/>
+        <result column="eb_platform_name" property="ebPlatformName"/>
+        <result column="pay_currency_code" property="payCurrencyCode"/>
+        <result column="pay_amount" property="payAmount"/>
+        <result column="pay_rmb_amount" property="payRmbAmount"/>
+        <result column="tax_amount" property="taxAmount"/>
+        <result column="freight_amount" property="freightAmount"/>
+        <result column="insurance_amount" property="insuranceAmount"/>
+        <result column="deduction_amount" property="deductionAmount"/>
+        <result column="deduction_note" property="deductionNote"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="TableName">
+        outbound_order_trade_detail
+    </sql>
+
+    <sql id="BaseColumn" >
+        `order_id`,
+        `order_no`,
+        `packing_type`,
+        `invoice`,
+        `receiver_zip`,
+        `receiver_province`,
+        `receiver_city`,
+        `receiver_country`,
+        `receiver_address`,
+        `receiver_identity_front_url`,
+        `receiver_identity_back_url`,
+        `receiver_identity_no`,
+        `receiver_mobile`,
+        `receiver_telephone`,
+        `purchaser_account`,
+        `purchaser_name`,
+        `logistic_bill`,
+        `logistic_remark`,
+        `payment_no`,
+        `pay_company_name`,
+        `eb_platform_code`,
+        `eb_platform_domain`,
+        `eb_platform_name`,
+        `pay_currency_code`,
+        `pay_amount`,
+        `pay_rmb_amount`,
+        `tax_amount`,
+        `freight_amount`,
+        `insurance_amount`,
+        `deduction_amount`,
+        `deduction_note`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <insert id="insert" parameterType="OutboundOrderTradeDetailDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{orderId},
+          #{orderNo},
+          #{packingType},
+          #{invoice},
+          #{receiverZip},
+          #{receiverProvince},
+          #{receiverCity},
+          #{receiverCountry},
+          #{receiverAddress},
+          #{receiverIdentityFrontUrl},
+          #{receiverIdentityBackUrl},
+          #{receiverIdentityNo},
+          #{receiverMobile},
+          #{receiverTelephone},
+          #{purchaserAccount},
+          #{purchaserName},
+          #{logisticBill},
+          #{logisticRemark},
+          #{paymentNo},
+          #{payCompanyName},
+          #{ebPlatformCode},
+          #{ebPlatformDomain},
+          #{ebPlatformName},
+          #{payCurrencyCode},
+          #{payAmount},
+          #{payRmbAmount},
+          #{taxAmount},
+          #{freightAmount},
+          #{insuranceAmount},
+          #{deductionAmount},
+          #{deductionNote},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+</mapper>

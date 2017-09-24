@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.outbound.OrderInventoryStrategyItemMapper" >
+    <resultMap id="BaseResult" type="OrderInventoryStrategyItemDO" >
+        <result column="id" property="id"/>
+        <result column="strategy_id" property="strategyId"/>
+        <result column="remark" property="remark"/>
+        <result column="priority" property="priority"/>
+        <result column="allocate_unit" property="allocateUnit"/>
+        <result column="is_fill_up" property="fillUp"/>
+        <result column="is_combine_goods" property="combineGoods"/>
+        <result column="is_across_area" property="acrossArea"/>
+        <result column="is_mix_inspection_order" property="mixInspectionOrder"/>
+        <result column="match_rule" property="matchRule"/>
+        <result column="is_location_prior" property="locationPrior"/>
+        <result column="ordering_rule" property="orderingRule"/>
+        <result column="is_enable" property="enable"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="TableName">
+        outbound_order_inventory_strategy_item
+    </sql>
+
+    <sql id="BaseColumn" >
+        `strategy_id`,
+        `remark`,
+        `priority`,
+        `allocate_unit`,
+        `is_fill_up`,
+        `is_combine_goods`,
+        `is_across_area`,
+        `is_mix_inspection_order`,
+        `match_rule`,
+        `is_location_prior`,
+        `ordering_rule`,
+        `is_enable`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <insert id="insert" parameterType="OrderInventoryStrategyItemDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{strategyId},
+          #{remark},
+          #{priority},
+          #{allocateUnit},
+          #{fillUp},
+          #{combineGoods},
+          #{acrossArea},
+          #{mixInspectionOrder},
+          #{matchRule},
+          #{locationPrior},
+          #{orderingRule},
+          #{enable},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+</mapper>

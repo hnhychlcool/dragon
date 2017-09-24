@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.inbound.InboundPlatformMapper" >
+
+    <resultMap id="BaseResult" type="InboundPlatformDO" >
+        <result column="id" property="id"/>
+        <result column="platform_no" property="platformNo"/>
+        <result column="platform_type" property="platformType"/>
+        <result column="is_valid" property="valid"/>
+        <result column="platform_specs" property="platformSpecs"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="TableName">
+        inbound_platform
+    </sql>
+
+    <sql id="BaseColumn" >
+        `platform_no`,
+        `platform_type`,
+        `is_valid`,
+        `platform_specs`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <sql id="AllColumn">
+        `id`,
+        <include refid="BaseColumn"/>
+    </sql>
+
+
+
+    <insert id="addPlatformInfo" parameterType="InboundPlatformDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{platformNo},
+          #{platformType},
+          #{valid},
+          #{platformSpecs},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TableName"/>
+        <where>
+            <if test="platformNo != null and platformNo != ''">
+                and platform_no like CONCAT('%', #{platformNo} ,'%')
+            </if>
+            <if test="platformType != null and platformType != 0">
+                and platform_type = #{platformType}
+            </if>
+            <if test="valid != null">
+                and is_valid = #{valid}
+            </if>
+        </where>
+    </select>
+
+    <select id="listPlatformInfo" resultMap="BaseResult">
+        select * from
+        <include refid="TableName"/>
+        <where>
+            <if test="platformNo != null and platformNo != ''">
+                and platform_no like CONCAT('%', #{platformNo} ,'%')
+            </if>
+            <if test="platformType != null and platformType != 0">
+                and platform_type = #{platformType}
+            </if>
+            <if test="valid != null">
+                and is_valid = #{valid}
+            </if>
+        </where>
+        <if test="limit != -1">limit #{limit} offset #{offset}</if>
+    </select>
+
+    <select id="getPlatformByPlatformNo" resultMap="BaseResult">
+        SELECT * FROM
+        <include refid="TableName"/>
+        WHERE platform_no = #{platformNo}
+    </select>
+
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+        id, <include refid="BaseColumn" />
+        FROM
+        <include refid="TableName"/>
+        WHERE
+        id = #{id}
+    </select>
+
+
+    <update id="updatePlatformInfo" parameterType="InboundPlatformDO">
+        UPDATE
+        <include refid="TableName"/>
+        <set>
+            <if test="platformType != null">
+                platform_type = #{platformType},
+            </if>
+            <if test="valid != null">
+                is_valid = #{valid},
+            </if>
+            <if test="platformSpecs != null">
+                platform_specs = #{platformSpecs},
+            </if>
+            update_time= now()
+        </set>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="platformNo != null">
+                and platform_no = #{platformNo}
+            </if>
+        </where>
+    </update>
+
+
+    <update id="enable">
+        UPDATE
+        <include refid="TableName"/>
+        <set>
+            <if test="valid != null">
+                is_valid = #{valid},
+            </if>
+        </set>
+        <where>
+            <if test="platformNo != null">
+                and platform_no = #{platformNo}
+            </if>
+        </where>
+    </update>
+
+    <update id="disable">
+        UPDATE
+        <include refid="TableName"/>
+        <set>
+            <if test="valid != null">
+                is_valid = #{valid},
+            </if>
+        </set>
+        <where>
+            <if test="platformNo != null">
+                and platform_no = #{platformNo}
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+
+    <delete id="deleteByPlatformNo">
+        DELETE
+        FROM
+        <include refid="TableName"/>
+        WHERE
+        platform_no = #{platformNo}
+    </delete>
+
+
+
+
+</mapper>

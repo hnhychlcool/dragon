@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "classpath:dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.auth.GroupRoleMapper">
+
+	<resultMap id="groupRoleMap" type="GroupRoleDO">
+		<id column="id" property="id" jdbcType="DECIMAL" />
+		<result column="group_id" property="groupId" jdbcType="DECIMAL" />
+		<result column="role_id" property="roleId" jdbcType="DECIMAL" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="DECIMAL" />
+		<result column="create_time" property="createTime" />
+		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
+		<result column="group_code" property="groupCode" jdbcType="VARCHAR" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TABLE_NAME">
+        auth_group_role
+    </sql>
+    <sql id="ROLE_TABLE_NAME">
+        auth_role
+    </sql>
+    <sql id="GROUP_TABLE_NAME">
+        auth_group
+    </sql>    
+	<select id="getByGroupIdAndRoleId" resultMap="groupRoleMap">
+		select * from <include refid="TABLE_NAME" /> where group_id=#{groupId} and role_id=#{roleId}
+	</select>
+	
+	<insert id="insertGroupRole" parameterType="GroupRoleDO"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		<include refid="TABLE_NAME" />(group_id,role_id,create_user_id,create_time)
+		values(#{groupId},#{roleId},#{createUserId},now())
+	</insert>
+	<delete id="deleteGroupRole">
+		delete from <include refid="TABLE_NAME" /> where id=#{id};
+	</delete>
+	<delete id="deleteByGroupId">
+		delete from <include refid="TABLE_NAME" /> where group_id=#{groupId}
+	</delete>
+	<delete id="deleteByRoleId">
+		delete from <include refid="TABLE_NAME" /> where role_id=#{roleId}
+	</delete>
+	
+	<select id="listByGroupId" resultMap="groupRoleMap">
+		select gr.*,r.role_name
+		role_name,g.group_name group_name
+		from <include refid="TABLE_NAME" /> gr
+		left join <include refid="ROLE_TABLE_NAME" /> r on
+		gr.role_id=r.id
+		left join <include refid="GROUP_TABLE_NAME" /> g on gr.group_id =g.id
+		where
+		gr.group_id=#{groupId}
+	</select>
+	<select id="listByRoleId" resultMap="groupRoleMap">
+		select gr.*,r.role_name
+		role_name,g.group_name group_name
+		from <include refid="TABLE_NAME" /> gr
+		left join <include refid="ROLE_TABLE_NAME" /> r on
+		gr.role_id=r.id
+		left join <include refid="GROUP_TABLE_NAME" /> g on gr.group_id =g.id
+		where
+		gr.role_id=#{roleId}
+	</select>
+</mapper>

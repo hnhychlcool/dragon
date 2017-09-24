@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.basicInfo.SkuMasterMapper">
+
+    <sql id="TABLE_NAME">
+        basic_sku_master
+    </sql>
+
+    <sql id="INSERT_ALL_COLUMNS">
+         `client_code`,`sku_code`,`first_category`,`second_category`,`third_category`,`fourth_category`,`sku_backend_id`,`sku_name`,`sku_desc`
+        ,`sku_name_en`,`brand_name`,`article_no`,`min_selling_unit`,`picture_urls`,`quality_guarantee_days`,`refuse_inbound_days`,`stock_warning_days`,`pull_warning_days`,`receipt_window_period`,`expire_window_period`
+        ,`min_packing_length`,`min_packing_width`,`min_packing_height`,`min_packing_volume`,`min_packing_weight`,`min_weight_limit`,`max_weight_limit`,`net_weight`,`gross_weight`
+        ,`product_no`,`customs_code`,`hs_category_name`,`hs_value_added_tax`,`hs_excise_tax`,`composite_tax_rate`,`declare_unit`,`declare_quantity`,`first_unit`,`first_unit_quantity`,`second_unit`,`second_unit_quantity`,`parcel_no`,`customs_alias`
+        ,`is_bubble_column`,`is_high_value`,`is_constant_temperature`,`is_air_embargo`,`is_fragile`,`is_dangerous_goods`,`is_batch_no_ctrl`,`is_need_invoice`,`is_sn_manage`,`is_expire_manage`,`is_advent_manage`,`advent_prd_sold_days`,`sn_format`
+        ,`size_type`,`operator_id`,`create_time`,`update_time`
+    </sql>
+    <sql id="SELECT_ALL_COLUMNS">
+        `id`,
+        <include refid="INSERT_ALL_COLUMNS"/>
+    </sql>
+
+    <resultMap id="skuMasterMap" type="SkuMasterDO">
+        <result column="id" property="id"/>
+        <result column="client_code" property="clientCode"/>
+        <result column="sku_code" property="skuCode"/>
+        <result column="first_category" property="firstCategory"/>
+        <result column="second_category" property="secondCategory"/>
+        <result column="third_category" property="thirdCategory"/>
+        <result column="fourth_category" property="fourthCategory"/>
+        <result column="sku_backend_id" property="skuBackendId"/>
+        <result column="sku_name" property="skuName"/>
+        <result column="sku_desc" property="skuDesc"/>
+        <result column="sku_name_en" property="skuNameEn"/>
+        <result column="brand_name" property="brandName"/>
+        <result column="article_no" property="articleNo"/>
+        <result column="min_selling_unit" property="minSellingUnit"/>
+        <result column="picture_urls" property="pictureUrls"/>
+        <result column="quality_guarantee_days" property="qualityGuaranteeDays"/>
+        <result column="refuse_inbound_days" property="refuseInboundDays"/>
+        <result column="stock_warning_days" property="stockWarningDays"/>
+        <result column="pull_warning_days" property="pullWarningDays"/>
+        <result column="receipt_window_period" property="receiptWindowPeriod"/>
+        <result column="expire_window_period" property="expireWindowPeriod"/>
+        <result column="min_packing_length" property="minPackingLength"/>
+        <result column="min_packing_width" property="minPackingWidth"/>
+        <result column="min_packing_height" property="minPackingHeight"/>
+        <result column="min_packing_volume" property="minPackingVolume"/>
+        <result column="min_packing_weight" property="minPackingWeight"/>
+        <result column="min_weight_limit" property="minWeightLimit"/>
+        <result column="max_weight_limit" property="maxWeightLimit"/>
+        <result column="net_weight" property="netWeight"/>
+        <result column="gross_weight" property="grossWeight"/>
+        <result column="export_carton" property="exportCarton"/>
+        <result column="stand_box_length" property="standBoxLength"/>
+        <result column="stand_box_width" property="standBoxWidth"/>
+        <result column="stand_box_height" property="standBoxHeight"/>
+        <result column="stand_box_volume" property="standBoxVolume"/>
+        <result column="stand_box_weight" property="standBoxWeight"/>
+        <result column="product_no" property="productNo"/>
+        <result column="customs_code" property="customsCode"/>
+        <result column="hs_category_name" property="hsCategoryName"/>
+        <result column="hs_value_added_tax" property="hsValueAddedTax"/>
+        <result column="hs_excise_tax" property="hsExciseTax"/>
+        <result column="composite_tax_rate" property="compositeTaxRate"/>
+        <result column="declare_unit" property="declareUnit"/>
+        <result column="declare_quantity" property="declareQuantity"/>
+        <result column="first_unit" property="firstUnit"/>
+        <result column="first_unit_quantity" property="firstUnitQuantity"/>
+        <result column="second_unit" property="secondUnit"/>
+        <result column="second_unit_quantity" property="secondUnitQuantity"/>
+        <result column="parcel_no" property="parcelNo"/>
+        <result column="customs_alias" property="customsAlias"/>
+        <result column="is_bubble_column" property="bubbleColumn"/>
+        <result column="is_high_value" property="highValue"/>
+        <result column="is_constant_temperature" property="constantTemperature"/>
+        <result column="is_air_embargo" property="airEmbargo"/>
+        <result column="is_fragile" property="fragile"/>
+        <result column="is_dangerous_goods" property="dangerousGoods"/>
+        <result column="is_batch_no_ctrl" property="batchNoCtrl"/>
+        <result column="is_need_invoice" property="needInvoice"/>
+        <result column="is_sn_manage" property="snManage"/>
+        <result column="is_expire_manage" property="expireManage"/>
+        <result column="is_advent_manage" property="adventManage"/>
+        <result column="advent_prd_sold_days" property="adventPrdSoldDays"/>
+        <result column="sn_format" property="snFormat"/>
+        <result column="size_type" property="sizeType"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="is_valid" property="valid"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="SkuMasterDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT into
+        <include refid="TABLE_NAME"/>
+        (
+        <include refid="INSERT_ALL_COLUMNS"/>
+        )
+        VALUES (#{clientCode},#{skuCode},#{firstCategory},#{secondCategory},#{thirdCategory},#{fourthCategory},#{skuBackendId},#{skuName},#{skuDesc}
+        ,#{skuNameEn},#{brandName},#{articleNo},#{minSellingUnit},#{pictureUrls},#{qualityGuaranteeDays},#{refuseInboundDays},#{stockWarningDays},#{pullWarningDays},#{receiptWindowPeriod},#{expireWindowPeriod}
+        ,#{minPackingLength},#{minPackingWidth},#{minPackingHeight},#{minPackingVolume},#{minPackingWeight},#{minWeightLimit},#{maxWeightLimit},#{netWeight},#{grossWeight}
+        ,#{productNo},#{customsCode},#{hsCategoryName},#{hsValueAddedTax},#{hsExciseTax},#{compositeTaxRate},#{declareUnit},#{declareQuantity},#{firstUnit},#{firstUnitQuantity},#{secondUnit},#{secondUnitQuantity},#{parcelNo},#{customsAlias}
+        ,#{bubbleColumn},#{highValue},#{constantTemperature},#{airEmbargo},#{fragile},#{dangerousGoods},#{batchNoCtrl},#{needInvoice},#{snManage},#{expireManage},#{adventManage},#{adventPrdSoldDays},#{snFormat}
+        ,#{sizeType} ,#{operatorId}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="SkuMasterDO">
+        UPDATE
+        <include refid="TABLE_NAME"/>
+        <set>
+            <if test="pictureUrls != null and pictureUrls != '' ">
+                picture_urls = #{pictureUrls},
+            </if>
+            <if test="dangerousGoods != null">
+                is_dangerous_goods = #{dangerousGoods},
+            </if>
+            <if test="highValue != null">
+                is_high_value = #{highValue},
+            </if>
+            <if test="constantTemperature != null">
+                is_constant_temperature = #{constantTemperature},
+            </if>
+            <if test="fragile != null">
+                is_fragile = #{fragile},
+            </if>
+            <if test="bubbleColumn != null">
+                is_bubble_column = #{bubbleColumn},
+            </if>
+            <if test="airEmbargo != null">
+                is_air_embargo = #{airEmbargo},
+            </if>
+            <if test="expireManage != null">
+                is_expire_manage = #{expireManage},
+            </if>
+            <if test="qualityGuaranteeDays != null">
+                quality_guarantee_days = #{qualityGuaranteeDays},
+            </if>
+            <if test="refuseInboundDays != null">
+                refuse_inbound_days = #{refuseInboundDays},
+            </if>
+            <if test="stockWarningDays != null">
+                stock_warning_days = #{stockWarningDays},
+            </if>
+            <if test="pullWarningDays != null">
+                pull_warning_days = #{pullWarningDays},
+            </if>
+            <if test="adventManage != null">
+                is_advent_manage = #{adventManage},
+            </if>
+            <if test="adventPrdSoldDays != null">
+                advent_prd_sold_days = #{adventPrdSoldDays},
+            </if>
+            <if test="batchNoCtrl != null">
+                is_batch_no_ctrl = #{batchNoCtrl},
+            </if>
+            <if test="receiptWindowPeriod != null">
+                receipt_window_period = #{receiptWindowPeriod},
+            </if>
+            <if test="expireWindowPeriod != null">
+                expire_window_period = #{expireWindowPeriod},
+            </if>
+            <if test="snManage != null">
+                is_sn_manage = #{snManage},
+            </if>
+            <if test="snFormat != null">
+                sn_format = #{snFormat},
+            </if>
+            <if test="minPackingLength != null">
+                min_packing_length = #{minPackingLength},
+            </if>
+            <if test="minPackingWidth != null">
+                min_packing_width = #{minPackingWidth},
+            </if>
+            <if test="minPackingHeight != null">
+                min_packing_height = #{minPackingHeight},
+            </if>
+            <if test="minPackingVolume != null">
+                min_packing_volume = #{minPackingVolume},
+            </if>
+            <if test="minPackingWeight != null">
+                min_packing_weight = #{minPackingWeight},
+            </if>
+            <if test="minWeightLimit != null">
+                min_weight_limit = #{minWeightLimit},
+            </if>
+            <if test="maxWeightLimit != null">
+                max_weight_limit = #{maxWeightLimit},
+            </if>
+            <if test="sizeType != null">
+                size_type = #{sizeType},
+            </if>
+            <if test="operatorId != null and operatorId != ''">
+                operator_id = #{operatorId},
+            </if>
+            update_time = now()
+        </set>
+        WHERE id=#{id}
+    </update>
+
+
+    <update id="updateBySkuCode" parameterType="SkuMasterDO">
+        UPDATE
+        <include refid="TABLE_NAME"/>
+        <set>
+
+            <if test="minPackingLength != null">
+                min_packing_length = #{minPackingLength},
+            </if>
+            <if test="minPackingWidth != null">
+                min_packing_width = #{minPackingWidth},
+            </if>
+            <if test="minPackingHeight != null">
+                min_packing_height = #{minPackingHeight},
+            </if>
+            <if test="minPackingVolume != null">
+                min_packing_volume = #{minPackingVolume},
+            </if>
+            <if test="minPackingWeight != null">
+                min_packing_weight = #{minPackingWeight},
+            </if>
+            <if test="minWeightLimit != null">
+                min_weight_limit = #{minWeightLimit},
+            </if>
+            <if test="maxWeightLimit != null">
+                max_weight_limit = #{maxWeightLimit},
+            </if>
+            <if test="sizeType != null">
+                size_type = #{sizeType},
+            </if>
+            update_time = now()
+        </set>
+        WHERE sku_code=#{skuCode} and client_code=#{clientCode}
+
+    </update>
+
+
+    <sql id="WHERE_LIST_QUERY">
+         is_valid=true
+        <if test="query.clientCode != null and query.clientCode != ''">
+            and client_code like CONCAT('%', #{query.clientCode} ,'%')
+        </if>
+        <if test="query.skuCode != null and query.skuCode != ''">
+            and sku_code like CONCAT('%', #{query.skuCode} ,'%')
+        </if>
+        <if test="query.skuName != null and query.skuName != ''">
+            and sku_name like CONCAT('%', #{query.skuName} ,'%')
+        </if>
+        <if test="query.skuNameEn != null and query.skuNameEn != ''">
+            and sku_name_en like CONCAT('%', #{query.skuNameEn} ,'%')
+        </if>
+        <if test="query.firstCategory != null and query.firstCategory != '' ">
+            and first_category = #{query.firstCategory}
+        </if>
+        <if test="query.secondCategory != null and query.secondCategory != '' ">
+            and second_category = #{query.secondCategory}
+        </if>
+        <if test="query.thirdCategory != null and query.thirdCategory != '' ">
+            and third_category = #{query.thirdCategory}
+        </if>
+        <if test="query.fourthCategory != null and query.fourthCategory != '' ">
+            and fourth_category = #{query.fourthCategory}
+        </if>
+    </sql>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TABLE_NAME"/>
+        <where>
+            <include refid="WHERE_LIST_QUERY"/>
+        </where>
+    </select>
+
+    <select id="listSkuMaster" resultMap="skuMasterMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+            <include refid="WHERE_LIST_QUERY"/>
+        </where>
+        order by id desc limit #{limit} offset #{offset}
+    </select>
+
+    <select id="getById" resultMap="skuMasterMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        where is_valid = true and id=#{id} <if test="needLock == true"> for update</if>
+    </select>
+
+    <select id="getSkuByCode" resultMap="skuMasterMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        where is_valid=true
+        <if test="clientCode != null">
+            and client_code=#{clientCode}
+        </if>
+        and sku_code=#{skuCode}
+    </select>
+
+    <select id="getSkuByBarcode" resultMap="skuMasterMap">
+        select basic_sku_master.*
+        from basic_sku_master
+        join basic_sku_reference on basic_sku_master.id=basic_sku_reference.sku_id
+        where basic_sku_reference.sku_barcode=#{skuBarcode}
+        <if test="clientCode != null">
+            and basic_sku_reference.client_code=#{clientCode}
+        </if>
+    </select>
+
+
+    <select id="getSkuNameBySkuBarcode" resultType="java.lang.String">
+        select sku_name from
+        <include refid="TABLE_NAME"/>
+        where
+        sku_barcode=#{skuBarcode}
+    </select>
+
+    <update id="batchUpdate">
+        update <include refid="TABLE_NAME"/>
+        set is_batch_no_ctrl = #{batchNoCtrl},size_type = #{sizeType}
+        where id in
+        <foreach collection="skuIds" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.basicInfo.GoodsShelvesMapper">
+
+    <sql id="TABLE_NAME">
+        basic_goods_shelves
+    </sql>
+
+    <sql id="INSERT_ALL_COLUMNS">
+        `type`,
+        `name`,
+        `bearing`,
+        `length`,
+        `width`,
+        `height`,
+        `floor_count`,
+        `location_count_each_floor`,
+        `location_bearing`,
+        `location_length`,
+        `location_width`,
+        `location_height`,
+        `channel_difference`,
+        `adjacent_shelves_difference`,
+        `opposite_shelves_difference`,
+        `shelves_floor_difference`,
+        `shelves_location_difference`,
+        `direction_of_operation`,
+        `operator_id`,
+        `create_time`,
+        `update_time`
+    </sql>
+    <sql id="SELECT_ALL_COLUMNS">
+        `id`,
+        <include refid="INSERT_ALL_COLUMNS"/>
+    </sql>
+
+    <resultMap id="goodsShelvesMap" type="titan.wms.common.dao.meta.basicInfo.GoodsShelvesDO">
+        <result column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="name" property="name"/>
+        <result column="bearing" property="bearing"/>
+        <result column="length" property="length"/>
+        <result column="width" property="width"/>
+        <result column="height" property="height"/>
+        <result column="floor_count" property="floorCount"/>
+        <result column="location_count_each_floor" property="locationCountEachFloor"/>
+        <result column="location_bearing" property="locationBearing"/>
+        <result column="location_length" property="locationLength"/>
+        <result column="location_width" property="locationWidth"/>
+        <result column="location_height" property="locationHeight"/>
+        <result column="channel_difference" property="channelDifference"/>
+        <result column="adjacent_shelves_difference" property="adjacentShelvesDifference"/>
+        <result column="opposite_shelves_difference" property="oppositeShelvesDifference"/>
+        <result column="shelves_floor_difference" property="shelvesFloorDifference"/>
+        <result column="shelves_location_difference" property="shelvesLocationDifference"/>
+        <result column="direction_of_operation" property="directionOfOperation"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="titan.wms.common.dao.meta.basicInfo.GoodsShelvesDO" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT into
+        <include refid="TABLE_NAME"/>
+        (
+        <include refid="INSERT_ALL_COLUMNS"/>
+        )
+        VALUES (
+        #{type},
+        #{name},
+        #{bearing},
+        #{length},
+        #{width},
+        #{height},
+        #{floorCount},
+        #{locationCountEachFloor},
+        #{locationBearing},
+        #{locationLength},
+        #{locationWidth},
+        #{locationHeight},
+        #{channelDifference},
+        #{adjacentShelvesDifference},
+        #{oppositeShelvesDifference},
+        #{shelvesFloorDifference},
+        #{shelvesLocationDifference},
+        #{directionOfOperation},
+        #{operatorId},
+        now(),
+        now()
+        )
+    </insert>
+
+    <update id="update" parameterType="titan.wms.common.dao.meta.basicInfo.GoodsShelvesDO">
+        UPDATE
+        <include refid="TABLE_NAME"/>
+        <set>
+            <if test="type != null"> `type` = #{type}, </if>
+            <if test="name != null"> `name` = #{name}, </if>
+            <if test="bearing != null"> `bearing` = #{bearing}, </if>
+            <if test="length != null"> `length` = #{length}, </if>
+            <if test="width != null"> `width` = #{width}, </if>
+            <if test="height != null"> `height` = #{height}, </if>
+            <if test="floorCount != null"> `floor_count` = #{floorCount}, </if>
+            <if test="locationCountEachFloor != null"> `location_count_each_floor` = #{locationCountEachFloor}, </if>
+            <if test="locationBearing != null"> `location_bearing` = #{locationBearing}, </if>
+            <if test="locationLength != null"> `location_length` = #{locationLength}, </if>
+            <if test="locationWidth != null"> `location_width` = #{locationWidth}, </if>
+            <if test="locationHeight != null"> `location_height` = #{locationHeight}, </if>
+            <if test="channelDifference != null"> `channel_difference` = #{channelDifference}, </if>
+            <if test="adjacentShelvesDifference != null"> `adjacent_shelves_difference` = #{adjacentShelvesDifference}, </if>
+            <if test="oppositeShelvesDifference != null"> `opposite_shelves_difference` = #{oppositeShelvesDifference}, </if>
+            <if test="shelvesFloorDifference != null"> `shelves_floor_difference` = #{shelvesFloorDifference}, </if>
+            <if test="shelvesLocationDifference != null"> `shelves_location_difference` = #{shelvesLocationDifference}, </if>
+            <if test="directionOfOperation != null"> `direction_of_operation` = #{directionOfOperation}, </if>
+            <if test="operatorId != null"> `operator_id` = #{operatorId}, </if>
+            update_time = now()
+        </set>
+        WHERE  id = #{id}
+    </update>
+
+    <select id="getById" resultMap="goodsShelvesMap">
+        SELECT
+        <include refid="SELECT_ALL_COLUMNS"/>
+        FROM
+        <include refid="TABLE_NAME"/>
+        <where>
+            id=#{id}
+        </where>
+    </select>
+
+    <select id="getByCode" resultMap="goodsShelvesMap">
+        SELECT
+        <include refid="SELECT_ALL_COLUMNS"/>
+        FROM
+        <include refid="TABLE_NAME"/>
+        <where>
+            code=#{code}
+        </where>
+    </select>
+
+    <sql id="WHERE_LIST_QUERY">
+        <if test="query.type != null ">
+            and type like CONCAT('%', #{query.type} ,'%')
+        </if>
+        <if test="query.name != null and query.name != '' ">
+            and name like CONCAT('%', #{query.name} ,'%')
+        </if>
+    </sql>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TABLE_NAME"/>
+        <where>
+            <include refid="WHERE_LIST_QUERY"/>
+        </where>
+    </select>
+
+    <select id="list" resultMap="goodsShelvesMap">
+        SELECT
+        <include refid="SELECT_ALL_COLUMNS"/>
+        FROM
+        <include refid="TABLE_NAME"/>
+        <where>
+            <include refid="WHERE_LIST_QUERY"/>
+        </where>
+        order by id desc limit #{limit} offset #{offset}
+    </select>
+
+    <select id="vagueList" resultMap="goodsShelvesMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+            <if test="param != null and param != '' ">
+                code like CONCAT('%', #{param} ,'%')
+                or name like CONCAT('%', #{param} ,'%')
+            </if>
+        </where>
+        limit 10
+    </select>
+
+    <delete id="delete">
+        delete from  <include refid="TABLE_NAME"/>
+        where id = #{id}
+    </delete>
+
+</mapper>

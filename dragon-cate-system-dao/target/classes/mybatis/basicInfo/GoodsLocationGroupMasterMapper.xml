@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.basicInfo.GoodsLocationGroupMasterMapper">
+    <!--auto generated Code-->
+    <resultMap id="GoodsLocationGroupMasterMap" type="GoodsLocationGroupMasterDO">
+        <result column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="related_equipment_code" property="relatedEquipmentCode"/>
+        <result column="related_location_num" property="relatedLocationNum"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="is_valid" property="valid"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="TABLE_NAME">
+        basic_goods_location_group
+    </sql>
+    <!--auto generated Code-->
+    <sql id="INSERT_COLUMNS">
+        `code`,
+        `name`,
+        `related_equipment_code`,
+        `related_location_num`,
+        `operator_id`,
+        `is_valid`,
+        `create_time`,
+        `update_time`
+    </sql>
+    <sql id="ALL_COLUMNS">
+        `id`,<include refid="INSERT_COLUMNS"/>
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" >
+        INSERT INTO <include refid="TABLE_NAME"/> (
+        <include refid="INSERT_COLUMNS"/>
+        ) VALUES ( #{code},#{name},#{relatedEquipmentCode},#{relatedLocationNum},#{operatorId},#{valid},now(), now() )
+    </insert>
+
+    <select id="getById" resultMap="GoodsLocationGroupMasterMap">
+        SELECT <include refid="ALL_COLUMNS"/> from <include refid="TABLE_NAME"/> where id = #{id} <if test="needLock = true"> for update</if>
+    </select>
+
+    <select id="getByCode" resultMap="GoodsLocationGroupMasterMap">
+        SELECT <include refid="ALL_COLUMNS"/> from <include refid="TABLE_NAME"/> where code = #{code}
+    </select>
+
+    <select id="pageQuery" resultMap="GoodsLocationGroupMasterMap">
+        SELECT <include refid="ALL_COLUMNS"/> from <include refid="TABLE_NAME"/>
+        <where>
+            <if test="code != null and code != ''"> code = #{code}</if>
+            <if test="relatedEquipmentCode != null and relatedEquipmentCode != ''"> related_equipment_code = #{relatedEquipmentCode}</if>
+        </where>
+        limit #{limit},#{offset}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(1) from <include refid="TABLE_NAME"/>
+        <where>
+            <if test="code != null and code != ''"> code = #{code}</if>
+            <if test="relatedEquipmentCode != null and relatedEquipmentCode != ''"> related_equipment_code = #{relatedEquipmentCode}</if>
+        </where>
+    </select>
+
+      <!--auto generated Code-->
+    <update id="update">
+        UPDATE <include refid="TABLE_NAME"/>
+        <set>
+            <if test="name != null"> `name` = #{name}, </if>
+            <if test="relatedEquipmentCode != null"> `related_equipment_code` = #{relatedEquipmentCode}, </if>
+            <if test="relatedLocationNum != null" > `related_location_num` = related_location_num + #{relatedLocationNum}, </if>
+            <if test="operatorId"> `operator_id` = #{operatorId} </if>
+            `update_time` = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+    <delete id="delete">
+        delete from <include refid="TABLE_NAME"/> WHERE id = #{id}
+    </delete>
+</mapper>
+

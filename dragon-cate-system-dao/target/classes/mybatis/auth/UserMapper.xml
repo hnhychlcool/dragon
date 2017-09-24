@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "classpath:dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.auth.UserMapper">
+
+	<resultMap id="userMap" type="UserDO">
+		<id column="id" property="id" jdbcType="DECIMAL" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+		<result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+		<result column="is_available" property="available" jdbcType="BOOLEAN" />
+		<result column="user_auth_version" property="userAuthVersion"
+			jdbcType="DECIMAL" />
+		<result column="expire_time" property="expireTime" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="TABLE_NAME">
+		auth_user
+	</sql>
+
+
+	<select id="listUsersByAccount" resultMap="userMap">
+		select * from
+		<include refid="TABLE_NAME" />
+		where account=#{account}
+	</select>
+	<select id="listAllUsers" resultMap="userMap">
+		select * from
+		<include refid="TABLE_NAME" />
+	</select>
+
+	<select id="countAllUsers" resultType="java.lang.Integer">
+		select count(*) from
+		<include refid="TABLE_NAME" />
+		<if test="groupId!=null">
+			, auth_user_group
+		</if>
+		<where>
+			<if test="account!=null">
+				and <include refid="TABLE_NAME" /> .account like CONCAT('%', #{account} ,'%')
+			</if>
+			<if test="userName!=null">
+				and <include refid="TABLE_NAME" /> .user_name like CONCAT('%', #{userName} ,'%')
+			</if>
+			<if test="available==1">
+				and <include refid="TABLE_NAME" /> .is_available=true
+			</if>
+			<if test="available==2">
+				and <include refid="TABLE_NAME" /> .is_available=false
+			</if>
+			<if test="groupId!=null">
+				and auth_user_group.group_id=#{groupId} and <include refid="TABLE_NAME" />.id=auth_user_group.user_id
+			</if>
+		</where>
+	</select>
+
+	<select id="listUsers" resultMap="userMap">
+		select <include refid="TABLE_NAME" />.* from
+		<include refid="TABLE_NAME" /> 
+		<if test="groupId!=null">
+			, auth_user_group
+		</if>
+		<where>
+			<if test="account!=null">
+				and <include refid="TABLE_NAME" /> .account like CONCAT('%', #{account} ,'%')
+			</if>
+			<if test="userName!=null">
+				and <include refid="TABLE_NAME" /> .user_name like CONCAT('%', #{userName} ,'%')
+			</if>
+			<if test="available==1">
+				and <include refid="TABLE_NAME" /> .is_available=true
+			</if>
+			<if test="available==2">
+				and <include refid="TABLE_NAME" /> .is_available=false
+			</if>
+			<if test="groupId!=null">
+				and auth_user_group.group_id=#{groupId} and <include refid="TABLE_NAME" />.id=auth_user_group.user_id
+			</if>
+		</where>
+		limit #{limit} offset #{offset}
+	</select>
+	<update id="increaseUserAuthVersion">
+		update
+		<include refid="TABLE_NAME" />
+		set user_auth_version=user_auth_version+1 where id=#{userId}
+	</update>
+
+
+	<insert id="insertUser" parameterType="UserDO" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into
+		<include refid="TABLE_NAME" />
+		(account,user_name,password,user_phone,user_email,create_time,update_time,
+		is_available,create_user_id,user_auth_version,expire_time)
+		values
+		(#{account},#{userName},#{password},#{userPhone},#{userEmail},now(),now(),
+		#{available},#{createUserId},#{userAuthVersion},#{expireTime})
+	</insert>
+
+	<update id="updateUser" parameterType="UserDO">
+		update
+		<include refid="TABLE_NAME" />
+		set
+		account=#{account},password=#{password},user_name=#{userName},
+		user_phone=#{userPhone},user_email=#{userEmail},update_time=now(),
+		is_available=#{available},user_auth_version=#{userAuthVersion},expire_time=#{expireTime},
+		create_user_id=#{createUserId} where id=#{id}
+	</update>
+
+
+	<select id="getUserByUserName" resultMap="userMap">
+		select * from
+		<include refid="TABLE_NAME" />
+		where user_name=#{userName}
+	</select>
+
+	<select id="getUserById" resultMap="userMap">
+		select * from
+		<include refid="TABLE_NAME" />
+		where
+		id=#{userId}
+	</select>
+
+	<select id="getUserByAccount" resultMap="userMap">
+		select * from
+		<include refid="TABLE_NAME" />
+		where account=#{account}
+	</select>
+
+	<select id="fuzzySearchByIdOrName" resultMap="userMap">
+		select * from
+		<include refid="TABLE_NAME" />
+		where id like CONCAT('%', #{value} ,'%') or name like  CONCAT('%', #{value} ,'%') limit 0 , 10
+	</select>
+</mapper>

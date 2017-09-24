@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "classpath:dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.auth.RoleMapper">
+
+	<resultMap id="roleMap" type="RoleDO">
+		<id column="id" property="id" jdbcType="DECIMAL" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="DECIMAL" />
+		<result column="menu" property="menu" jdbcType="VARCHAR" />
+		<result column="rf_menu" property="rfMenu" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	
+	<sql id="TABLE_NAME">
+        auth_role
+    </sql>
+
+
+	<select id="listAllRoles" resultMap="roleMap">
+		select * from <include refid="TABLE_NAME" />
+	</select>
+	<select id="getByName" resultMap="roleMap">
+		select * from <include refid="TABLE_NAME" /> where
+		role_name=#{roleName}
+	</select>
+
+	<select id="getById" resultMap="roleMap">
+		select * from <include refid="TABLE_NAME" /> where
+		id=#{roleId}
+	</select>
+
+	<select id="countAllRoles" resultType="java.lang.Integer">
+		select count(id) from
+		<include refid="TABLE_NAME" /> 
+		<where>
+			<if test="roleName!=null">
+				role_name like CONCAT('%', #{roleName} ,'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="listRoles" resultMap="roleMap">
+		select * from <include refid="TABLE_NAME" />
+		<where>
+			<if test="roleName!=null">
+				role_name like CONCAT('%', #{roleName} ,'%')
+			</if>
+		</where>
+		limit #{limit} offset #{offset}
+	</select>
+
+
+	<insert id="insertRole" parameterType="RoleDO" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into
+		<include refid="TABLE_NAME" /> (role_name,role_desc,create_user_id,menu,rf_menu,create_time,update_time)values
+		(#{roleName},#{roleDesc},#{createUserId},#{menu},#{rfMenu},now(),now())
+	</insert>
+
+
+	<update id="updateRole" parameterType="RoleDO">
+		update <include refid="TABLE_NAME" /> 
+		set
+		role_name=#{roleName},role_desc=#{roleDesc},menu=#{menu},rf_menu=#{rfMenu},update_time=now()
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteRole">
+		delete from <include refid="TABLE_NAME" /> where id=#{roleId}
+	</delete>
+</mapper>

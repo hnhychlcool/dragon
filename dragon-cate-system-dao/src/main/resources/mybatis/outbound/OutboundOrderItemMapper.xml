@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.outbound.OutboundOrderItemMapper" >
+    <resultMap id="BaseResult" type="OutboundOrderItemDO" >
+        <result column="id" property="id"/>
+        <result column="order_id" property="orderId"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="sku_code" property="skuCode"/>
+        <result column="sku_barcode" property="skuBarcode"/>
+        <result column="sku_name" property="skuName"/>
+        <result column="count" property="count"/>
+        <result column="weight" property="weight"/>
+        <result column="price" property="price"/>
+        <result column="hk_price" property="hkPrice"/>
+        <result column="ts_code" property="tsCode"/>
+        <result column="hs_code" property="hsCode"/>
+        <result column="origin_country_code" property="originCountryCode"/>
+        <result column="declare_unit" property="declareUnit"/>
+        <result column="first_unit" property="firstUnit"/>
+        <result column="first_count" property="firstCount"/>
+        <result column="second_unit" property="secondUnit"/>
+        <result column="second_count" property="secondCount"/>
+        <result column="customs_record_no" property="customsRecordNo"/>
+        <result column="size_type" property="sizeType"/>
+        <result column="picking_count" property="pickingCount"/>
+        <result column="sowing_count" property="sowingCount"/>
+        <result column="packaging_count" property="packagingCount"/>
+        <result column="allocated_count" property="allocatedCount"/>
+    </resultMap>
+
+    <sql id="TableName">
+        outbound_order_item
+    </sql>
+
+    <sql id="BaseColumn" >
+        `order_id`,
+        `sku_id`,
+        `sku_code`,
+        `sku_barcode`,
+        `sku_name`,
+        `count`,
+        `weight`,
+        `price`,
+        `hk_price`,
+        `ts_code`,
+        `hs_code`,
+        `origin_country_code`,
+        `declare_unit`,
+        `first_unit`,
+        `first_count`,
+        `second_unit`,
+        `second_count`,
+        `customs_record_no`,
+        `size_type`,
+        `picking_count`,
+        `sowing_count`,
+        `packaging_count`,
+        `allocated_count`
+    </sql>
+
+    <insert id="insert" parameterType="OutboundOrderItemDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{orderId},
+          #{skuId},
+          #{skuCode},
+          #{skuBarcode},
+          #{skuName},
+          #{count},
+          #{weight},
+          #{price},
+          #{hkPrice},
+          #{tsCode},
+          #{hsCode},
+          #{originCountryCode},
+          #{declareUnit},
+          #{firstUnit},
+          #{firstCount},
+          #{secondUnit},
+          #{secondCount},
+          #{customsRecordNo},
+          #{sizeType},
+          #{pickingCount},
+          #{sowingCount},
+          #{packagingCount},
+          #{allocatedCount}
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+</mapper>

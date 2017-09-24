@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.basicInfo.SkuReferenceMapper">
+
+    <sql id="TABLE_NAME">
+        basic_sku_reference
+    </sql>
+
+    <sql id="INSERT_ALL_COLUMNS">
+        `client_code`,  `sku_id`, `sku_code`, `sku_barcode`,
+        `operator_id`, `create_time`, `update_time`
+    </sql>
+    <sql id="SELECT_ALL_COLUMNS">
+        `id`,
+        <include refid="INSERT_ALL_COLUMNS"/>
+    </sql>
+
+    <resultMap id="skuReferenceMap" type="SkuReferenceDO">
+        <result column="id" property="id"/>
+        <result column="client_code" property="clientCode"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="sku_code" property="skuCode"/>
+        <result column="sku_barcode" property="skuBarcode"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="SkuReferenceDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT into
+        <include refid="TABLE_NAME"/>
+        (
+        <include refid="INSERT_ALL_COLUMNS"/>
+        )
+        VALUES (#{clientCode}, #{skuId}, #{skuCode}, #{skuBarcode},
+        #{operatorId}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="SkuReferenceDO">
+        UPDATE
+        <include refid="TABLE_NAME"/>
+        <set>
+            <if test="clientCode != null and clientCode != '' ">
+                client_code = #{clientCode},
+            </if>
+            <if test="skuId != null and skuId != '' ">
+                sku_id = #{skuId},
+            </if>
+            <if test="skuCode != null and skuCode != '' ">
+                sku_code = #{skuCode},
+            </if>
+            <if test="skuBarcode != null and skuBarcode != '' ">
+                sku_barcode = #{skuBarcode},
+            </if>
+            <if test="operatorId != null and operatorId != ''">
+                operator_id = #{operatorId},
+            </if>
+            update_time = now()
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="getById" resultMap="skuReferenceMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        where  id=#{id}
+    </select>
+
+    <select id="findFirstBarcode" resultMap="skuReferenceMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        where sku_id=#{skuId}
+        limit 1
+    </select>
+
+    <select id="getByBarcode" resultMap="skuReferenceMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        where sku_barcode = #{skuBarcode}
+        <if test="clientCode == null">
+            and client_code = #{clientCode}
+        </if>
+    </select>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT count(id) FROM
+        <include refid="TABLE_NAME"/>
+        <where>
+            <if test="skuCode != null and skuCode != ''">
+                and sku_code like CONCAT('%', #{skuCode} ,'%')
+            </if>
+            <if test="skuBarcode != null and skuBarcode != ''">
+                and sku_barcode like CONCAT('%', #{skuBarcode} ,'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="list" resultMap="skuReferenceMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+            <if test="query.skuCode != null and query.skuCode != '' ">
+                and sku_code like CONCAT('%', #{query.skuCode} ,'%')
+            </if>
+            <if test="query.skuBarcode != null and query.skuBarcode != ''">
+                and sku_barcode like CONCAT('%', #{query.skuBarcode} ,'%')
+            </if>
+        </where>
+        order by id desc limit #{limit} offset #{offset}
+    </select>
+
+    <select id="listByBarcodeList" resultMap="skuReferenceMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        where sku_barcode in
+        <foreach collection="barcodeList" item="barcode" open="(" close=")" separator=",">
+            #{barcode}
+        </foreach>
+    </select>
+
+    <select id="findByBarcode" resultMap="skuReferenceMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        where sku_barcode = #{barcode}
+    </select>
+
+    <delete id="delete">
+        delete from
+        <include refid="TABLE_NAME"/>
+        where id = #{id}
+    </delete>
+
+</mapper>

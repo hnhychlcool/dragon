@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.inbound.InboundTallyDetailMapper" >
+    <resultMap id="BaseResult" type="InboundTallyDetailDO" >
+        <result column="id" property="id"/>
+        <result column="tally_no" property="tallyNo"/>
+        <result column="purchase_no" property="purchaseNo"/>
+        <result column="inbound_no" property="inboundNo"/>
+        <result column="inspection_no" property="inspectionNo"/>
+        <result column="sku_barcode" property="skuBarcode"/>
+        <result column="sku_name" property="skuName"/>
+        <result column="purchase_count" property="purchaseCount"/>
+        <result column="unit" property="unit"/>
+        <result column="good_received_count" property="goodReceivedCount"/>
+        <result column="bad_received_count" property="badReceivedCount"/>
+        <result column="pitcture_urls" property="pitctureUrls"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="TableName">
+        inbound_tally_detail
+    </sql>
+
+    <sql id="BaseColumn" >
+        `tally_no`,
+        `purchase_no`,
+        `inbound_no`,
+        `inspection_no`,
+        `sku_barcode`,
+        `sku_name`,
+        `purchase_count`,
+        `unit`,
+        `good_received_count`,
+        `bad_received_count`,
+        `pitcture_urls`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <insert id="insert" parameterType="InboundTallyDetailDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{tallyNo},
+          #{purchaseNo},
+          #{inboundNo},
+          #{inspectionNo},
+          #{skuBarcode},
+          #{skuName},
+          #{purchaseCount},
+          #{unit},
+          #{goodReceivedCount},
+          #{badReceivedCount},
+          #{pitctureUrls},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+</mapper>

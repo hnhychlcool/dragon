@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="titan.wms.common.dao.mapper.outbound.OutboundOrderMapper" >
+    <resultMap id="BaseResult" type="OutboundOrderDO" >
+        <result column="id" property="id"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="way_bill" property="wayBill"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="order_time" property="orderTime"/>
+        <result column="pay_time" property="payTime"/>
+        <result column="cpt_time" property="cptTime"/>
+        <result column="sku_count" property="skuCount"/>
+        <result column="total_count" property="totalCount"/>
+        <result column="package_count" property="packageCount"/>
+        <result column="delivery_time" property="deliveryTime"/>
+        <result column="carrier_id" property="carrierId"/>
+        <result column="carrier_code" property="carrierCode"/>
+        <result column="carrier_name" property="carrierName"/>
+        <result column="client_id" property="clientId"/>
+        <result column="client_code" property="clientCode"/>
+        <result column="client_name" property="clientName"/>
+        <result column="transport_line_id" property="transportLineId"/>
+        <result column="is_group" property="group"/>
+        <result column="group_code" property="groupCode"/>
+        <result column="is_staple" property="staple"/>
+        <result column="is_origin_box" property="originBox"/>
+        <result column="is_single" property="single"/>
+        <result column="is_national_inspection" property="nationalInspection"/>
+        <result column="is_national_inspection_pass" property="nationalInspectionPass"/>
+        <result column="is_customs_inspection" property="customsInspection"/>
+        <result column="is_customs_inspection_pass" property="customsInspectionPass"/>
+        <result column="receiver_name" property="receiverName"/>
+        <result column="commend_packing_material" property="commendPackingMaterial"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="TableName">
+        outbound_order
+    </sql>
+
+    <sql id="BaseColumn" >
+        `order_no`,
+        `way_bill`,
+        `type`,
+        `status`,
+        `order_time`,
+        `pay_time`,
+        `cpt_time`,
+        `sku_count`,
+        `total_count`,
+        `package_count`,
+        `delivery_time`,
+        `carrier_id`,
+        `carrier_code`,
+        `carrier_name`,
+        `client_id`,
+        `client_code`,
+        `client_name`,
+        `transport_line_id`,
+        `is_group`,
+        `group_code`,
+        `is_staple`,
+        `is_origin_box`,
+        `is_single`,
+        `is_national_inspection`,
+        `is_national_inspection_pass`,
+        `is_customs_inspection`,
+        `is_customs_inspection_pass`,
+        `receiver_name`,
+        `commend_packing_material`,
+        `remark`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <insert id="insert" parameterType="OutboundOrderDO" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+          <include refid="TableName" /> (<include refid="BaseColumn" />)
+        VALUES(
+          #{orderNo},
+          #{wayBill},
+          #{type},
+          #{status},
+          #{orderTime},
+          #{payTime},
+          #{cptTime},
+          #{skuCount},
+          #{totalCount},
+          #{packageCount},
+          #{deliveryTime},
+          #{carrierId},
+          #{carrierCode},
+          #{carrierName},
+          #{clientId},
+          #{clientCode},
+          #{clientName},
+          #{transportLineId},
+          #{group},
+          #{groupCode},
+          #{staple},
+          #{originBox},
+          #{single},
+          #{nationalInspection},
+          #{nationalInspectionPass},
+          #{customsInspection},
+          #{customsInspectionPass},
+          #{receiverName},
+          #{commendPackingMaterial},
+          #{remark},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResult">
+        SELECT
+          id, <include refid="BaseColumn" />
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+          <include refid="TableName"/>
+        WHERE
+          id = #{id}
+    </delete>
+</mapper>

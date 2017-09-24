@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+        namespace="titan.wms.common.dao.mapper.inbound.InboundTitleMapper">
+
+    <sql id="TABLE_NAME">
+		inbound_title
+	</sql>
+
+    <sql id="INSERT_ALL_COLUMNS">
+		`inbound_no`, `purchase_id`, `purchase_no`,`purchase_type`,
+		`inbound_type`, `client_id`,`client_code`,
+		`client_name`, `contract_no`, `carrier_code`, `carrier_name`,
+		`logistics_num`, `status`, `expected_arrival_date`, `actual_arrival_date`,
+		`start_recived_date`, `port_arrival_date`, `tally_check_date`, `tally_pass_date`, `putaway_finish_date`,
+		`close_date`, `cancel_date`, `supplier_code`, `supplier_name`,`supply_type`, `count`, `received_count`,
+		`remark`, `operator_id`, `create_time`, `update_time`,`recived_finish_date`,`start_putaway_date`,`inspection_no`
+	</sql>
+
+    <sql id="SELECT_ALL_COLUMNS">
+        `id`,
+        <include refid="INSERT_ALL_COLUMNS"/>
+    </sql>
+
+    <resultMap id="inboundTitleMap" type="InboundTitleDO">
+        <result column="id" property="id"/>
+        <result column="inbound_no" property="inboundNo"/>
+        <result column="purchase_id" property="purchaseId"/>
+        <result column="purchase_no" property="purchaseNo"/>
+        <result column="purchase_type" property="purchaseType"/>
+        <result column="inbound_type" property="inboundType"/>
+        <result column="client_id" property="clientId"/>
+        <result column="client_code" property="clientCode"/>
+        <result column="client_name" property="clientName"/>
+        <result column="contract_no" property="contractNo"/>
+        <result column="carrier_code" property="carrierCode"/>
+        <result column="carrier_name" property="carrierName"/>
+        <result column="logistics_num" property="logisticsNum"/>
+        <result column="status" property="status"/>
+        <result column="expected_arrival_date" property="expectedArrivalDate"/>
+        <result column="actual_arrival_date" property="actualArrivalDate"/>
+        <result column="start_recived_date" property="startRecivedDate"/>
+        <result column="port_arrival_date" property="portArrivalDate"/>
+        <result column="tally_check_date" property="tallyCheckDate"/>
+        <result column="tally_pass_date" property="tallyPassDate"/>
+        <result column="putaway_finish_date" property="putawayFinishDate"/>
+        <result column="close_date" property="closeDate"/>
+        <result column="cancel_date" property="cancelDate"/>
+        <result column="supplier_code" property="supplierCode"/>
+        <result column="supplier_name" property="supplierName"/>
+        <result column="supply_type" property="supplyType"/>
+        <result column="count" property="count"/>
+        <result column="received_count" property="receivedCount"/>
+        <result column="remark" property="remark"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="recived_finish_date" property="recivedFinishDate"/>
+        <result column="start_putaway_date" property="startPutawayDate"/>
+        <result column="inspection_no" property="inspectionNo"/>
+
+
+    </resultMap>
+
+    <insert id="addInboundTitle" parameterType="InboundTitleDO"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT into
+        <include refid="TABLE_NAME"/>
+        (
+        <include refid="INSERT_ALL_COLUMNS"/>
+        )
+        VALUES ( #{inboundNo}, #{purchaseId},
+        #{purchaseNo},#{purchaseType}, #{inboundType}, #{clientId}, #{clientCode},
+        #{clientName}, #{contractNo}, #{carrierCode}, #{carrierName},
+        #{logisticsNum}, #{status}, #{expectedArrivalDate},
+        #{actualArrivalDate}, #{startRecivedDate}, #{portArrivalDate},
+        #{tallyCheckDate}, #{tallyPassDate}, #{putawayFinishDate},
+        #{closeDate}, #{cancelDate}, #{supplierCode},
+        #{supplierName},#{supplyType}, #{count}, #{receivedCount},
+        #{remark},
+        #{operatorId}, now(), now(),
+        #{recivedFinishDate}, #{startPutawayDate}, #{inspectionNo}
+        )
+    </insert>
+
+    <update id="updateInboundTitle" parameterType="InboundTitleDO">
+        UPDATE
+        <include refid="TABLE_NAME"/>
+        <set>
+            <if test="purchaseType != null">
+                purchase_type = #{purchaseType},
+            </if>
+            <if test="inboundType != null">
+                inbound_type = #{inboundType},
+            </if>
+            <if test="clientCode != null and clientCode != '' ">
+                client_code = #{clientCode},
+            </if>
+            <if test="clientName != null and clientName !=''">
+                client_name = #{clientName},
+            </if>
+            <if test="contractNo != null and contractNo != ''">
+                contract_no = #{contractNo},
+            </if>
+            <if test="carrierCode != null and carrierCode != ''">
+                carrier_code = #{carrierCode},
+            </if>
+            <if test="carrierName != null and carrierName != ''">
+                carrier_name = #{carrierName},
+            </if>
+            <if test="logisticsNum != null and logisticsNum != ''">
+                logistics_num = #{logisticsNum},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="expectedArrivalDate != null">
+                expected_arrival_date = #{expectedArrivalDate},
+            </if>
+            <if test="actualArrivalDate != null">
+                actual_arrival_date = #{actualArrivalDate},
+            </if>
+            <if test="startRecivedDate != null">
+                start_recived_date = #{startRecivedDate},
+            </if>
+            <if test="supplierCode != null and supplierCode!=''">
+                supplier_code = #{supplierCode},
+            </if>
+            <if test="supplierName != null and supplierName !=''">
+                supplier_name = #{supplierName},
+            </if>
+            <if test="supplyType != null">
+                supply_type = #{supplyType},
+            </if>
+            <if test="count != null">
+                count = #{count},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="receivedCount != null">
+                received_count = #{receivedCount},
+            </if>
+            <if test="tallyCheckDate != null">
+                tally_check_date = #{tallyCheckDate},
+            </if>
+            <if test="tallyPassDate != null">
+                tally_pass_date = #{tallyPassDate},
+            </if>
+            <if test="putawayFinishDate != null">
+                putaway_finish_date = #{putawayFinishDate},
+            </if>
+            <if test="recivedFinishDate != null">
+                recived_finish_date = #{recivedFinishDate},
+            </if>
+            <if test="startPutawayDate != null">
+                start_putaway_date = #{startPutawayDate},
+            </if>
+            update_time= now()
+        </set>
+        <where>
+
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="purchaseNo != null and purchaseNo != '' ">
+                and purchase_no = #{purchaseNo}
+            </if>
+            <if test="inboundNo != null and inboundNo != '' ">
+                and inbound_no = #{inboundNo}
+            </if>
+        </where>
+    </update>
+
+    <update id="updateInspectionByInboundNo" parameterType="java.lang.String">
+        UPDATE
+        <include refid="TABLE_NAME"/>
+        <set>
+            <if test="inspectionNo != null">
+                inspection_no = #{inspectionNo},
+            </if>
+            update_time= now()
+        </set>
+        <where>
+            <if test="inboundNo != null and inboundNo != '' ">
+                and inbound_no = #{inboundNo}
+            </if>
+        </where>
+    </update>
+
+    <select id="hasNoInitInbound" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TABLE_NAME"/>
+        WHERE id=#{id} and status!= 0
+    </select>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        <include refid="TABLE_NAME"/>
+        <where>
+
+            <if test="purchaseNo != null and purchaseNo != ''">
+                and purchase_no like CONCAT('%', #{purchaseNo} ,'%')
+            </if>
+            <if test="inboundNo != null and inboundNo != ''">
+                and inbound_no like CONCAT('%', #{inboundNo} ,'%')
+            </if>
+            <if test="inboundType != null and inboundType != 0">
+                and inbound_type = #{inboundType}
+            </if>
+            <if test="status != null and status != 0">
+                and status = #{status}
+            </if>
+            <if test="clientCode != null and clientCode != ''">
+                and client_code = #{clientCode}
+            </if>
+            <if test="clientName != null and clientName != ''">
+                and client_name like CONCAT('%', #{clientName} ,'%')
+            </if>
+            <if test="carrierCode != null and carrierCode != ''">
+                and carrier_code = #{carrierCode}
+            </if>
+            <if test="carrierName != null and carrierName !=''">
+                and carrier_name like CONCAT('%', #{carrierName} ,'%')
+            </if>
+            <if test="logisticsNum != null and logisticsNum != ''">
+                and logistics_num = #{logisticsNum}
+            </if>
+
+            <if test="inspectionNo != null and inspectionNo != ''">
+                and inspection_no = #{inspectionNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="listInboundTitleInfo" resultMap="inboundTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+
+            <if test="purchaseNo != null and purchaseNo !='' ">
+                and purchase_no like CONCAT('%', #{purchaseNo} ,'%')
+            </if>
+            <if test="inboundNo != null and inboundNo != ''">
+                and inbound_no like CONCAT('%', #{inboundNo} ,'%')
+            </if>
+            <if test="inboundType != null">
+                and inbound_type = #{inboundType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="clientCode != null and clientCode != '' ">
+                and client_code like CONCAT('%', #{clientCode} ,'%')
+            </if>
+            <if test="clientName != null and clientName != '' ">
+                and client_name like CONCAT('%', #{clientName} ,'%')
+            </if>
+            <if test="contractNo != null and contractNo != '' ">
+                and contract_no like CONCAT('%', #{contractNo} ,'%')
+            </if>
+            <if test="carrierCode != null and carrierCode != ''">
+                and carrier_code like CONCAT('%', #{carrierCode} ,'%')
+            </if>
+            <if test="carrierName != null and carrierName != '' ">
+                and carrier_name like CONCAT('%', #{carrierName} ,'%')
+            </if>
+            <if test="logisticsNum != null and logisticsNum != '' ">
+                and logistics_num like CONCAT('%', #{logisticsNum} ,'%')
+            </if>
+            <if test="inspectionNo != null and inspectionNo != ''">
+                and inspection_no = #{inspectionNo}
+            </if>
+        </where>
+        <if test="limit != -1">limit #{limit} offset #{offset}</if>
+    </select>
+
+    <select id="listInboundTitleInfoNoPage" resultMap="inboundTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+
+            <if test="purchaseNo != null and purchaseNo !='' ">
+                and purchase_no like CONCAT('%', #{purchaseNo} ,'%')
+            </if>
+            <if test="inboundNo != null and inboundNo != ''">
+                and inbound_no like CONCAT('%', #{inboundNo} ,'%')
+            </if>
+            <if test="inboundType != null">
+                and inbound_type = #{inboundType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="clientCode != null and clientCode != '' ">
+                and client_code like CONCAT('%', #{clientCode} ,'%')
+            </if>
+            <if test="clientName != null and clientName != '' ">
+                and client_name like CONCAT('%', #{clientName} ,'%')
+            </if>
+            <if test="contractNo != null and contractNo != '' ">
+                and contract_no like CONCAT('%', #{contractNo} ,'%')
+            </if>
+            <if test="carrierCode != null and carrierCode != ''">
+                and carrier_code like CONCAT('%', #{carrierCode} ,'%')
+            </if>
+            <if test="carrierName != null and carrierName != '' ">
+                and carrier_name like CONCAT('%', #{carrierName} ,'%')
+            </if>
+            <if test="logisticsNum != null and logisticsNum != '' ">
+                and logistics_num like CONCAT('%', #{logisticsNum} ,'%')
+            </if>
+
+            <if test="inspectionNo != null and inspectionNo != ''">
+                and inspection_no = #{inspectionNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="getInboundTitleByInboundNo" resultMap="inboundTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        WHERE inbound_no = #{inboundNo}
+    </select>
+
+    <select id="getInboundTitleByPurchaseInboundNo" resultMap="inboundTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        WHERE
+        <if test="purchaseNo != null and purchaseNo != '' ">
+            and purchase_no = #{purchaseNo}
+        </if>
+        <if test="inboundNo != null and inboundNo != ''">
+            and inbound_no = #{inboundNo}
+        </if>
+    </select>
+
+    <select id="getInboundStatus" resultType="java.lang.Integer">
+        SELECT status from
+        <include refid="TABLE_NAME"/>
+        WHERE 1=1
+        <if test="purchaseNo != null and purchaseNo != '' ">
+            and purchase_no = #{purchaseNo}
+        </if>
+        <if test="inboundNo != null and inboundNo != ''">
+            and inbound_no = #{inboundNo}
+        </if>
+        for update
+    </select>
+
+    <select id="getInboundTitle" parameterType="InboundTitleDO"
+            resultMap="inboundTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        <where>
+
+            <if test="purchaseNo != null and purchaseNo != '' ">
+                and purchase_no = #{purchaseNo}
+            </if>
+            <if test="purchaseId != null">
+                and purchase_id = #{purchaseId}
+            </if>
+            <if test="inboundNo != null and inboundNo != '' ">
+                and inbound_no = #{inboundNo}
+            </if>
+            <if test="id != null and id != 0">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="getInboundTitleByIdOrName" resultMap="inboundTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        WHERE
+        <if test="id != null and id != 0">
+            and id = #{id}
+        </if>
+        <if test="inboundNo != null and inboundNo != ''">
+            and inbound_no = #{inboundNo}
+        </if>
+    </select>
+
+    <select id="getById" resultMap="inboundTitleMap">
+        select * from
+        <include refid="TABLE_NAME"/>
+        where id=#{inboundTitleId}
+    </select>
+
+    <update id="updateInboundStatus">
+        update
+        <include refid="TABLE_NAME"/>
+        set status = #{status}, actual_arrival_date=now(), update_time = now() WHERE id = #{id}
+    </update>
+
+
+    <update id="updateInboundStatusByInboundNo">
+        update
+        <include refid="TABLE_NAME"/>
+        set status = #{status}, update_time=now() WHERE inbound_no = #{inboundNo}
+    </update>
+
+
+    <update id="increaseReceiveCount">
+        update
+        <include refid="TABLE_NAME"/>
+        set received_count=(received_count+#{skuCount}), update_time = now() where
+        id=#{inboundTitleId}
+    </update>
+
+    <update id="increaseReceiveCountByInboundNo">
+        update
+        <include refid="TABLE_NAME"/>
+        set received_count = (received_count + #{skuCount}), update_time = now() where
+        inbound_no=#{inboundNo}
+    </update>
+
+    <!-- 入库单跟踪记录分页条件查询 -->
+    <!-- 此处子查询是为了根据入库详情中一个品牌筛选获得所在入库单记录 -->
+    <select id="queryInboundTitleVO" resultMap="InboundTitleVOResultMap">
+        SELECT * FROM (
+        SELECT t1.inbound_no, t1.`status`, t1.purchase_no, t1.inbound_type, SUM(t3.bad_count) reject_count,
+        t1.port_arrival_date, t1.actual_arrival_date, t1.tally_check_date, t1.tally_pass_date, t1.putaway_finish_date,
+        COUNT(t2.id) sku_count, SUM(t2.`count`) `count`, GROUP_CONCAT(t4.brand_name) brands,
+        SUM(CASE WHEN (t2.count &gt; t2.received_count) THEN (t2.`count` - t2.received_count) ELSE 0 END) less_count,
+        SUM(CASE WHEN (t2.count &lt; t2.received_count) THEN (t2.received_count - t2.`count`) ELSE 0 END) more_count
+        FROM inbound_title t1
+        LEFT JOIN inbound_purchase_detail t2 ON t1.purchase_id = t2.purchase_id
+        LEFT JOIN inbound_detail t3 ON t2.purchase_id = t3.purchase_id AND t2.sku_code = t3.sku_code
+        LEFT JOIN basic_sku_master t4 ON t1.warehouse_id = t4.warehouse_id AND t2.sku_code = t4.sku_code
+        <include refid="queryInboundTitleVoCondition"/>
+        GROUP BY t1.purchase_id
+        ) t
+        <if test="param.brandName != null and param.brandName !=''">
+            WHERE t.brands LIKE CONCAT('%', #{param.brandName}, '%')
+        </if>
+        <if test="limit != -1">limit #{limit} offset #{offset}</if>
+    </select>
+
+    <!-- 入库单跟踪记录总数 -->
+    <select id="countOfQueryInboundTitleVO" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM (
+        SELECT t1.id, GROUP_CONCAT(brand_name) brands FROM inbound_title t1
+        LEFT JOIN inbound_purchase_detail t2 ON t1.purchase_id = t2.purchase_id
+        LEFT JOIN basic_sku_master t3 ON t1.warehouse_id = t3.warehouse_id AND t2.sku_code = t3.sku_code
+        <include refid="queryInboundTitleVoCondition"/>
+        GROUP BY t1.purchase_id
+        ) t
+        <if test="param.brandName != null and param.brandName !=''">
+            WHERE t.brands LIKE CONCAT('%', #{param.brandName}, '%')
+        </if>
+    </select>
+
+    <sql id="queryInboundTitleVoCondition">
+        WHERE
+        <if test="param.begin != null">
+            AND t1.actual_arrival_date &gt;= #{param.begin}
+        </if>
+        <if test="param.end != null">
+            AND t1.actual_arrival_date &lt;= #{param.end}
+        </if>
+        <if test="param.inboundNo != null and param.inboundNo !=''">
+            AND t1.inbound_no LIKE CONCAT('%', #{param.inboundNo}, '%')
+        </if>
+        <if test="param.status != null">
+            AND t1.status = #{param.status}
+        </if>
+        <if test="param.clientId != 0">
+            AND t1.client_id = #{param.clientId}
+        </if>
+        <if test="param.expectedBegin != null">
+            AND t1.expected_arrival_date &gt;= #{param.expectedBegin}
+        </if>
+        <if test="param.expectedEnd != null">
+            AND t1.expected_arrival_date &lt;= #{param.expectedEnd}
+        </if>
+        <if test="param.purchaseNo != null and param.purchaseNo !=''">
+            AND t1.purchase_no LIKE CONCAT('%', #{param.purchaseNo}, '%')
+        </if>
+        <if test="param.inboundType != null">
+            AND t1.inbound_type = #{param.inboundType}
+        </if>
+    </sql>
+
+    <!-- InboundTitleVO ResultMap -->
+    <resultMap id="InboundTitleVOResultMap" type="InboundTitleVO">
+        <result column="inbound_no" property="inboundNo"/>
+        <result column="status" property="status"/>
+        <result column="purchase_no" property="purchaseNo"/>
+        <result column="inbound_type" property="inboundType"/>
+        <result column="sku_count" property="skuCount"/>
+        <result column="brands" property="brands"/>
+        <result column="count" property="count"/>
+        <result column="less_count" property="lessCount"/>
+        <result column="more_count" property="moreCount"/>
+        <result column="reject_count" property="rejectCount"/>
+        <result column="port_arrival_date" property="portArrivalDate"/>
+        <result column="actual_arrival_date" property="actualArrivalDate"/>
+        <result column="tally_check_date" property="tallyCheckDate"/>
+        <result column="tally_pass_date" property="tallyPassDate"/>
+        <result column="putaway_finish_date" property="putawayFinishDate"/>
+    </resultMap>
+</mapper>

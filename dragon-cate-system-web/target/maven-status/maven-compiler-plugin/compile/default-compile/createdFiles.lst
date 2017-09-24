@@ -1,1 +1,3 @@
-dragon\cate\system\web\application\Starter.class
+com\dragon\cate\web\controller\ShopperController.class
+com\dragon\cate\web\config\InterceptorConfig.class
+com\dragon\cate\web\application\Starter.class
