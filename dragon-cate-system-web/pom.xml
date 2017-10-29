@@ -94,7 +94,7 @@
             <build>
                 <resources>
                     <resource>
-                        <directory>src/main/resources/conf</directory>
+                        <directory>src/main/resources/conf/local</directory>
                     </resource>
                 </resources>
             </build>
