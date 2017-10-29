@@ -11,9 +11,9 @@ spring:
        
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.165.127.52/titan_wms?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
-    username: titan
-    password: titan
+    url: jdbc:mysql://120.27.230.222/dragon?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 1qaz!QAZ
     druid:
       initial-size: 5
       max-active: 10

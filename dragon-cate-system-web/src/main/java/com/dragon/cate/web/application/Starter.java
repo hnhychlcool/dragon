@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 /**
  * 项目启动入口
  */
-@ComponentScan
+@ComponentScan(basePackages = {"com.dragon.cate"})
 @EnableAutoConfiguration(exclude = {DataSourceTransactionManagerAutoConfiguration.class, SessionAutoConfiguration.class,
         DataSourceAutoConfiguration.class, FreeMarkerAutoConfiguration.class, SecurityAutoConfiguration.class})
 @SpringBootApplication
