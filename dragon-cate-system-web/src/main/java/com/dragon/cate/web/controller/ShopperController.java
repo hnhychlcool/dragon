@@ -13,7 +13,6 @@ import javax.annotation.PostConstruct;
 @RequestMapping("shopper")
 public class ShopperController {
 
-
     @PostConstruct
     public void init() {
         System.out.println("init shopper...");

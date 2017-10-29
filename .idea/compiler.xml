@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="dragon-cate-system-common" />
         <module name="dragon-cate-system-dao" />
+        <module name="dragon-cate-system-domain" />
         <module name="dragon-cate-system-service" />
         <module name="dragon-cate-system-web" />
       </profile>
@@ -16,6 +17,7 @@
       <module name="dragon-cate-system" target="1.8" />
       <module name="dragon-cate-system-common" target="1.8" />
       <module name="dragon-cate-system-dao" target="1.8" />
+      <module name="dragon-cate-system-domain" target="1.8" />
       <module name="dragon-cate-system-service" target="1.8" />
       <module name="dragon-cate-system-web" target="1.8" />
     </bytecodeTargetLevel>
