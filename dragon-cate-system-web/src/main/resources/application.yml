@@ -1,8 +1,8 @@
-mybatis:
-  mapper-locations: classpath:mybatis/**/*.xml
-  type-aliases-package: titan.wms.common.dao.meta
-  configuration:
-    default-enum-type-handler: titan.wms.common.dao.typehandler.IntValueEnumTypeHandler
+#mybatis:
+#  mapper-locations: classpath:mybatis/**/*.xml
+#  type-aliases-package: com.dragon.cate.dao.meta
+#  configuration:
+#    default-enum-type-handler: com.dragon.cate.dao.handler.IntValueEnumTypeHandler
 
 spring:
   freemarker:

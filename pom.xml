@@ -34,6 +34,35 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.dragon.cate</groupId>
+                <artifactId>dragon-cate-system-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dragon.cate</groupId>
+                <artifactId>dragon-cate-system-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dragon.cate</groupId>
+                <artifactId>dragon-cate-system-dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dragon.cate</groupId>
+                <artifactId>dragon-cate-system-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dragon.cate</groupId>
+                <artifactId>dragon-cate-system-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- module version [end] -->
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
