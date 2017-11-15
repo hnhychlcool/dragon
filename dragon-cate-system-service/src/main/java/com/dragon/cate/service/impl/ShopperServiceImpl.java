@@ -1,6 +1,6 @@
 package com.dragon.cate.service.impl;
 
-import com.dragon.cate.dao.mapper.ShopperMapper;
+import com.dragon.cate.dao.mapper.shopper.ShopperMapper;
 import com.dragon.cate.service.ShopperService;
 import com.dragon.cate.shopper.ShopperInfo;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 @Service
 public class ShopperServiceImpl implements ShopperService {
 
-//    @Resource
+    @Resource
     private ShopperMapper shopperMapper;
 
     @Override

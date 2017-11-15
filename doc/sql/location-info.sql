@@ -1,6 +1,6 @@
 
 // 商圈信息
-CREATE TABLE trading_area {
+CREATE TABLE trading_area (
 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 `trading_area_pingyin` varchar(100) DEFAULT NULL COMMENT '商圈名称拼音',
 `trading_area_name` varchar(100) DEFAULT NULL COMMENT '商圈名称拼音',
@@ -10,4 +10,4 @@ CREATE TABLE trading_area {
 `create_time` datetime DEFAULT NULL,
 `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  PRIMARY KEY (`id`)
-}
+ )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='商圈信息表';

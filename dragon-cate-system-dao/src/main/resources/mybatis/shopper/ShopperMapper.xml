@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="titan.wms.common.dao.mapper.basicInfo.AreaMasterMapper">
+<mapper namespace="com.dragon.cate.dao.mapper.shopper.ShopperMapper">
 
     <sql id="TABLE_NAME">
         basic_area_master

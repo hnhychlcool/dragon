@@ -1,11 +1,11 @@
 
 // 商家基本信息
-CREATE TABLE vendor_basic_detail {
+CREATE TABLE shopper_basic_detail (
 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 `city_id` int(10) unsigned NOT NULL COMMENT '商家所处城市id',
-`vendor_title` VARCHAR (50) NOT NULL COMMENT '商家店铺招牌',
-`vendor_desc` VARCHAR (100) COMMENT '商家描述',
-`vendor_tips` VARCHAR (100) COMMENT '商家服务简介',
+`shopper_title` VARCHAR (50) NOT NULL COMMENT '商家店铺招牌',
+`shopper_desc` VARCHAR (100) COMMENT '商家描述',
+`shopper_tips` VARCHAR (100) COMMENT '商家服务简介',
 `store_price` DECIMAL (10, 2) NOT NULL COMMENT '门店价格',
 `favorable_price` DECIMAL (10, 2) NOT NULL COMMENT '优惠价格',
 `sold_count` int(10) unsigned COMMENT '已售数量',
@@ -15,5 +15,5 @@ CREATE TABLE vendor_basic_detail {
 `create_time` datetime DEFAULT NULL,
 `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  PRIMARY KEY (`id`)
-}
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='商家信息表';
 

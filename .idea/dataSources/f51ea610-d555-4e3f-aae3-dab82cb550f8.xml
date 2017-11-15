@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="dragon@120.27.230.222">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="dragon">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="sys"/>
+    <table id="7" parent="2" name="shopper_basic_detail">
+      <Comment>商家信息表</Comment>
+    </table>
+    <table id="8" parent="2" name="shopper_comment">
+      <Comment>商家评论信息表</Comment>
+    </table>
+    <table id="9" parent="2" name="sku_category">
+      <Comment>商品分类信息表</Comment>
+    </table>
+    <table id="10" parent="2" name="sku_detail_category">
+      <Comment>商品详情信息表</Comment>
+    </table>
+    <table id="11" parent="2" name="trading_area">
+      <Comment>商圈信息表</Comment>
+    </table>
+    <table id="12" parent="2" name="user_label">
+      <Comment>用户评论信息表</Comment>
+    </table>
+    <column id="13" parent="7" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="14" parent="7" name="city_id">
+      <Position>2</Position>
+      <Comment>商家所处城市id</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="15" parent="7" name="shopper_title">
+      <Position>3</Position>
+      <Comment>商家店铺招牌</Comment>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="16" parent="7" name="shopper_desc">
+      <Position>4</Position>
+      <Comment>商家描述</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="17" parent="7" name="shopper_tips">
+      <Position>5</Position>
+      <Comment>商家服务简介</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="18" parent="7" name="store_price">
+      <Position>6</Position>
+      <Comment>门店价格</Comment>
+      <DataType>decimal(10,2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="19" parent="7" name="favorable_price">
+      <Position>7</Position>
+      <Comment>优惠价格</Comment>
+      <DataType>decimal(10,2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="20" parent="7" name="sold_count">
+      <Position>8</Position>
+      <Comment>已售数量</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="21" parent="7" name="comment_id">
+      <Position>9</Position>
+      <Comment>评论id</Comment>
+      <DataType>bigint(20)|0</DataType>
+    </column>
+    <column id="22" parent="7" name="latitude">
+      <Position>10</Position>
+      <Comment>经度</Comment>
+      <DataType>decimal(10,2)|0</DataType>
+    </column>
+    <column id="23" parent="7" name="longtitude">
+      <Position>11</Position>
+      <Comment>纬度</Comment>
+      <DataType>decimal(10,2)|0</DataType>
+    </column>
+    <column id="24" parent="7" name="create_time">
+      <Position>12</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="25" parent="7" name="update_time">
+      <Position>13</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <key id="26" parent="7" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="27" parent="8" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="28" parent="8" name="shopper_id">
+      <Position>2</Position>
+      <Comment>评论所属商家id</Comment>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="29" parent="8" name="one_star_comment_count">
+      <Position>3</Position>
+      <Comment>一星评论数量</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="30" parent="8" name="two_star_comment_count">
+      <Position>4</Position>
+      <Comment>二星评论数量</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="31" parent="8" name="three_star_comment_count">
+      <Position>5</Position>
+      <Comment>三星评论数量</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="32" parent="8" name="four_star_comment_count">
+      <Position>6</Position>
+      <Comment>四星评论数量</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="33" parent="8" name="five_star_comment_count">
+      <Position>7</Position>
+      <Comment>五星评论数量</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="34" parent="8" name="total_comment_goal">
+      <Position>8</Position>
+      <Comment>总评分</Comment>
+      <DataType>float(5,2)|0</DataType>
+    </column>
+    <column id="35" parent="8" name="comment_content">
+      <Position>9</Position>
+      <Comment>评论内容</Comment>
+      <DataType>varchar(300)|0</DataType>
+    </column>
+    <column id="36" parent="8" name="shopper_reply_content">
+      <Position>10</Position>
+      <Comment>商家回复内容</Comment>
+      <DataType>varchar(300)|0</DataType>
+    </column>
+    <column id="37" parent="8" name="comment_pictures">
+      <Position>11</Position>
+      <Comment>评论图片地址</Comment>
+      <DataType>varchar(300)|0</DataType>
+    </column>
+    <column id="38" parent="8" name="create_time">
+      <Position>12</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="39" parent="8" name="update_time">
+      <Position>13</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <index id="40" parent="8" name="uk_shopper_id">
+      <ColNames>shopper_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="41" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="42" parent="8" name="uk_shopper_id">
+      <ColNames>shopper_id</ColNames>
+      <UnderlyingIndexName>uk_shopper_id</UnderlyingIndexName>
+    </key>
+    <column id="43" parent="9" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="44" parent="9" name="category_name">
+      <Position>2</Position>
+      <Comment>分类名称</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="45" parent="9" name="create_time">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="46" parent="9" name="update_time">
+      <Position>4</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <key id="47" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="48" parent="10" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="49" parent="10" name="category_id">
+      <Position>2</Position>
+      <Comment>明细分类所属上级分类key</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="50" parent="10" name="detail_category_name">
+      <Position>3</Position>
+      <Comment>具体分类名称</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="51" parent="10" name="create_time">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="52" parent="10" name="update_time">
+      <Position>5</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <key id="53" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="54" parent="11" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="55" parent="11" name="trading_area_pingyin">
+      <Position>2</Position>
+      <Comment>商圈名称拼音</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="56" parent="11" name="trading_area_name">
+      <Position>3</Position>
+      <Comment>商圈名称拼音</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="57" parent="11" name="category_name">
+      <Position>4</Position>
+      <Comment>分类名称</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="58" parent="11" name="latitude">
+      <Position>5</Position>
+      <Comment>经度</Comment>
+      <DataType>decimal(10,2)|0</DataType>
+    </column>
+    <column id="59" parent="11" name="longtitude">
+      <Position>6</Position>
+      <Comment>纬度</Comment>
+      <DataType>decimal(10,2)|0</DataType>
+    </column>
+    <column id="60" parent="11" name="create_time">
+      <Position>7</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="61" parent="11" name="update_time">
+      <Position>8</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <key id="62" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="63" parent="12" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="64" parent="12" name="comment_id">
+      <Position>2</Position>
+      <Comment>带此标签的评论id</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="65" parent="12" name="label_count">
+      <Position>3</Position>
+      <Comment>标签数量</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+    </column>
+    <column id="66" parent="12" name="label_content">
+      <Position>4</Position>
+      <Comment>标签内容</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="67" parent="12" name="create_time">
+      <Position>5</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="68" parent="12" name="update_time">
+      <Position>6</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <key id="69" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
