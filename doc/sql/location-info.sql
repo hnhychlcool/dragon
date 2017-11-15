@@ -1,5 +1,4 @@
 
-// 商圈信息
 CREATE TABLE trading_area (
 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 `trading_area_pingyin` varchar(100) DEFAULT NULL COMMENT '商圈名称拼音',

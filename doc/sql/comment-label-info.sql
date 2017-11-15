@@ -1,5 +1,4 @@
 
-// 商家评论信息
 CREATE TABLE shopper_comment (
 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 `shopper_id` bigint(20) unsigned NOT NULL COMMENT '评论所属商家id',
@@ -18,7 +17,6 @@ CREATE TABLE shopper_comment (
  UNIQUE KEY `uk_shopper_id` (`shopper_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='商家评论信息表';
 
-// 用户评论标签信息
 CREATE TABLE user_label (
 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 `comment_id` int (10) unsigned COMMENT '带此标签的评论id',

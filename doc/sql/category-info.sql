@@ -9,7 +9,6 @@ CREATE TABLE sku_category (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='商品分类信息表';
 
-// 商品具体分类
 CREATE TABLE sku_detail_category (
 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 `category_id` varchar(100) DEFAULT NULL COMMENT '明细分类所属上级分类key',
