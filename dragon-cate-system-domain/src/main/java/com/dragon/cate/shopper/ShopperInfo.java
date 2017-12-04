@@ -1,8 +1,13 @@
 package com.dragon.cate.shopper;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by chl on 2017/10/29.
  */
+@Getter
+@Setter
 public class ShopperInfo {
 
     private long id;

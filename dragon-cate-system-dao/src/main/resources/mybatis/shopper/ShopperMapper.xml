@@ -3,11 +3,14 @@
 <mapper namespace="com.dragon.cate.dao.mapper.shopper.ShopperMapper">
 
     <sql id="TABLE_NAME">
-        basic_area_master
+        shopper_basic_detail
     </sql>
 
     <sql id="INSERT_ALL_COLUMNS">
-        `code`, `name`, `operator_id`, `create_time`, `update_time`
+        `city_id`, `shopper_title`, `shopper_desc`,
+        `shopper_tips`, `store_price`, `favorable_price`,
+        `sold_count`, `comment_id`, `latitude`, `longtitude`,
+         `create_time`, `update_time`
     </sql>
 
     <sql id="SELECT_ALL_COLUMNS">

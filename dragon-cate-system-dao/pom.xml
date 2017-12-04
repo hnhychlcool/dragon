@@ -10,7 +10,10 @@
     <artifactId>dragon-cate-system-dao</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.dragon.cate</groupId>
             <artifactId>dragon-cate-system-common</artifactId>

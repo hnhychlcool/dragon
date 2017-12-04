@@ -1,5 +1,4 @@
 
-// 商家基本信息
 CREATE TABLE shopper_basic_detail (
 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 `city_id` int(10) unsigned NOT NULL COMMENT '商家所处城市id',

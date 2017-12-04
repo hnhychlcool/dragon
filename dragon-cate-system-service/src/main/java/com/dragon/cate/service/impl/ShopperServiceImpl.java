@@ -18,6 +18,7 @@ public class ShopperServiceImpl implements ShopperService {
 
     @Override
     public ShopperInfo getShopperInfoById(long id) {
-        return null;
+        return shopperMapper.getShopperInfoById(id);
     }
+
 }
