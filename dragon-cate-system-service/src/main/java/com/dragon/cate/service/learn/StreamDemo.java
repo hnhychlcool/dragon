@@ -11,6 +11,8 @@ public class StreamDemo {
         List<ShopperInfo> shopperInfoList = Lists.newArrayList();
 
 
+        char ch = '我';
+        System.out.println("char value is:" + ch);
 //        shopperInfoList.stream().flatMap(shopperInfo->shopperInfo.getName().stream()).collect(Collectors.toSet());
     }
 
