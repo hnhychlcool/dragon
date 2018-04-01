@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 public class Animal {
 
-    private String owner;
+//    private String owner;
+    public String owner;
 
     protected String color;
 
