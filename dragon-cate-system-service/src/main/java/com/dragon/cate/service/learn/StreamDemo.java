@@ -1,11 +1,12 @@
+
 package com.dragon.cate.service.learn;
 
 import com.dragon.cate.shopper.ShopperInfo;
 import com.google.common.collect.Lists;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class StreamDemo {
@@ -19,15 +20,23 @@ public class StreamDemo {
 
 
         char ch = '我';
-        System.out.println("char value is:" + ch);
+//        System.out.println("char value is:" + ch);
 //        shopperInfoList.stream().flatMap(shopperInfo->shopperInfo.getName().stream()).collect(Collectors.toSet());
 
-        IntStream.range(1, 3).forEach(System.out::println);
+//        IntStream.range(1, 3).forEach(System.out::println);
 
-        IntStream.rangeClosed(1, 3).forEach(System.out::println);
+//        IntStream.rangeClosed(1, 3).forEach(System.out::println);
 
-        function();
+//        function();
 
+        List<Integer> list = Lists.newArrayList(3, 4, 5);
+
+        shopperInfoList.stream().filter(shopperInfo -> shopperInfo.getName().equalsIgnoreCase("chl")).mapToLong(shopperInfo -> shopperInfo.getId()).sum();
+
+        shopperInfoList.stream().sorted(Comparator.comparing(shopperInfo -> shopperInfo.getName()));
+
+        int sum = list.stream().reduce(0, (x, y) -> x + y);
+        System.out.println("sum = [" + sum + "]");
     }
 
 
