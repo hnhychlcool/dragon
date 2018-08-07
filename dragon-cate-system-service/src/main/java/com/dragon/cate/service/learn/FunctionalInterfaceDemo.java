@@ -37,8 +37,9 @@ public class FunctionalInterfaceDemo {
         CalcFunction modCalcFunction = x -> x % 5;
 
         System.out.println("x add function result: " + addCalcFunction.cacl(1));
-        System.out.println("x multiply function result: " + multiplyCalcFunction.cacl(2));
-        System.out.println("x mod function result: " + modCalcFunction.cacl(13));
+        System.out.println("x multiply function result: " + multiplyCalcFunction.cacl(5));
+        System.out.println("x mod function result: " + modCalcFunction.cacl(99));
+
 
     }
 
