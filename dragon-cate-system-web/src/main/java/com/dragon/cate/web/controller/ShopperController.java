@@ -1,5 +1,6 @@
 package com.dragon.cate.web.controller;
 
+import com.dragon.cate.base.ResponseVO;
 import com.dragon.cate.service.ShopperService;
 import com.dragon.cate.shopper.ShopperInfo;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class ShopperController {
     @ResponseBody
     public Object getShopperById(long id) {
         ShopperInfo shopperInfo = shopperService.getShopperInfoById(id);
-        return null;
+        return ResponseVO.success();
     }
 //
 //    @RequestMapping("index")

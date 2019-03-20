@@ -37,17 +37,10 @@
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.21</version>
-        </dependency>
     </dependencies>
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -70,9 +63,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
                 <configuration>
-                    <mainClass>com.dragon.cate.web.application.Starter</mainClass>
+                    <mainClass>com.dragon.cate.web.application.ApplicationStarter</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -87,88 +79,6 @@
     <!--==================================== -->
     <!-- 配置不同环境的配置文件 -->
     <!--==================================== -->
-    <profiles>
-        <!-- 本地开发环境 -->
-        <profile>
-            <id>local</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources/conf/local</directory>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-        <!-- 测试环境配置 -->
-        <profile>
-            <id>test</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources/conf/test</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-        <profile>
-            <id>wms_test1</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources/conf/test</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-        <profile>
-            <id>performance</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources/conf/performance</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-        <profile>
-            <id>stable_master</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources/conf/test</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-        <profile>
-            <id>stable_dev</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources/conf/test</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-        <profile>
-            <id>online</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources/conf/online</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-    </profiles>
+
 
 </project>

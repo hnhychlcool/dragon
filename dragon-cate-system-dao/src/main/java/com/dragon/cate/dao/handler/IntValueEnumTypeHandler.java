@@ -1,6 +1,7 @@
 package com.dragon.cate.dao.handler;
 
 import com.dragon.cate.common.enums.IntValueEnum;
+import com.google.common.collect.Maps;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
@@ -8,7 +9,6 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class IntValueEnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
 
-    private final Map<Integer, E> map = new HashMap<>();
+    private final Map<Integer, E> map = Maps.newHashMap();
 
     public IntValueEnumTypeHandler(Class<E> type) {
         if (type == null) throw new IllegalArgumentException("Type argument cannot be null");
