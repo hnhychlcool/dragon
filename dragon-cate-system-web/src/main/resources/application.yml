@@ -1,6 +1,6 @@
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
-  type-aliases-package: com.dragon.cate.dao.meta
+  type-aliases-package: com.dragon.cate
   configuration:
     default-enum-type-handler: com.dragon.cate.dao.handler.IntValueEnumTypeHandler
 

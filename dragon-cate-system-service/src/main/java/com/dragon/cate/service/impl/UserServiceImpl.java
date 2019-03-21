@@ -1,8 +1,10 @@
 package com.dragon.cate.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dragon.cate.dao.mapper.user.UserMapper;
 import com.dragon.cate.dbo.UserDO;
 import com.dragon.cate.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,6 +30,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDO queryById(Long id) {
         return this.userDao.queryById(id);
+    }
+
+    @Override
+    public UserDO queryByCondition(JSONObject condition) {
+        UserDO userDO = new UserDO();
+        BeanUtils.copyProperties(condition, userDO);
+        return userDao.queryByCondition(userDO);
     }
 
     /**

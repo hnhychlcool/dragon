@@ -30,12 +30,20 @@ public class ResponseVO implements Serializable {
         this.message = message;
     }
 
+    public static ResponseVO ok(boolean expression) {
+        ResponseVO ResponseVO = new ResponseVO();
+        ResponseVO.setCode(expression ? ResultEnum.SUCCESS.getCode() : ResultEnum.FAILURE.getCode());
+        ResponseVO.setMessage(expression ? ResultEnum.SUCCESS.getMessage() : ResultEnum.FAILURE.getMessage());
+        return ResponseVO;
+    }
+
     public static ResponseVO failure() {
         ResponseVO ResponseVO = new ResponseVO();
         ResponseVO.setCode(ResultEnum.FAILURE.getCode());
         ResponseVO.setMessage(ResultEnum.FAILURE.getMessage());
         return ResponseVO;
     }
+
     public static ResponseVO failure(String msg) {
         ResponseVO ResponseVO = new ResponseVO();
         ResponseVO.setCode(ResultEnum.FAILURE.getCode());

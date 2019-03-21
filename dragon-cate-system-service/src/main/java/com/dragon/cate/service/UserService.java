@@ -1,6 +1,7 @@
 package com.dragon.cate.service;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.dragon.cate.dbo.UserDO;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public interface UserService {
      * @return 实例对象
      */
     UserDO queryById(Long id);
+
+    UserDO queryByCondition(JSONObject condition);
 
     /**
      * 查询多条数据
