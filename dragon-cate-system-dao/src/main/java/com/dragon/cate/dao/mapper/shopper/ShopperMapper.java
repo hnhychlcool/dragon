@@ -1,6 +1,6 @@
 package com.dragon.cate.dao.mapper.shopper;
 
-import com.dragon.cate.shopper.ShopperInfo;
+import com.dragon.cate.dao.meta.ShopperInfoDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ShopperMapper {
 
-    public ShopperInfo getShopperInfoById(long id);
+    ShopperInfoDO getShopperInfoById(long id);
 
 }

@@ -1,8 +1,8 @@
 package com.dragon.cate.service.impl;
 
 import com.dragon.cate.dao.mapper.shopper.ShopperMapper;
+import com.dragon.cate.dao.meta.ShopperInfoDO;
 import com.dragon.cate.service.ShopperService;
-import com.dragon.cate.shopper.ShopperInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,7 +17,7 @@ public class ShopperServiceImpl implements ShopperService {
     private ShopperMapper shopperMapper;
 
     @Override
-    public ShopperInfo getShopperInfoById(long id) {
+    public ShopperInfoDO getShopperInfoById(long id) {
         return shopperMapper.getShopperInfoById(id);
     }
 

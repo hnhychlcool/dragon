@@ -1,8 +1,8 @@
 package com.dragon.cate.web.controller;
 
 import com.dragon.cate.base.ResponseVO;
+import com.dragon.cate.dao.meta.ShopperInfoDO;
 import com.dragon.cate.service.ShopperService;
-import com.dragon.cate.shopper.ShopperInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +29,7 @@ public class ShopperController {
     @RequestMapping("index")
     @ResponseBody
     public Object getShopperById(long id) {
-        ShopperInfo shopperInfo = shopperService.getShopperInfoById(id);
+        ShopperInfoDO shopperInfo = shopperService.getShopperInfoById(id);
         return ResponseVO.success();
     }
 //

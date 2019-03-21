@@ -1,17 +1,16 @@
-package com.dragon.cate.dao.meta;
+package com.dragon.cate.shopper;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-
 @Data
-public class ShopperInfoDO {
+public class ShopperBasicDetail {
 
     private long id;
 
-    private int cityId;
+    private long cityId;
 
     private String shopperTitle;
 
@@ -34,5 +33,6 @@ public class ShopperInfoDO {
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
 
 }
