@@ -1,4 +1,4 @@
-package com.dragon.cate.dao.meta;
+package com.dragon.cate.dao.meta.shopper;
 
 import lombok.Data;
 

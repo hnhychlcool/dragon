@@ -1,6 +1,6 @@
 package com.dragon.cate.dao.mapper.shopper;
 
-import com.dragon.cate.dao.meta.ShopperInfoDO;
+import com.dragon.cate.dao.meta.shopper.ShopperInfoDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
