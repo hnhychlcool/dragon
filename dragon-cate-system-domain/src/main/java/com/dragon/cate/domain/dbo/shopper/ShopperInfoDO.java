@@ -1,4 +1,4 @@
-package com.dragon.cate.dao.meta.shopper;
+package com.dragon.cate.domain.dbo.shopper;
 
 import lombok.Data;
 

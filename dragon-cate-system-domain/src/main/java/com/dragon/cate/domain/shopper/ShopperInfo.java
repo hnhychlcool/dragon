@@ -1,4 +1,4 @@
-package com.dragon.cate.shopper;
+package com.dragon.cate.domain.shopper;
 
 import lombok.Getter;
 import lombok.Setter;

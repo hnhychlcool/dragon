@@ -2,7 +2,7 @@ package com.dragon.cate.service;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.dragon.cate.dbo.UserDO;
+import com.dragon.cate.domain.dbo.user.UserDO;
 
 import java.util.List;
 

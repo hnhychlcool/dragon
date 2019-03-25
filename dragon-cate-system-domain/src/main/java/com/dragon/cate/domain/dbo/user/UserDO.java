@@ -1,4 +1,4 @@
-package com.dragon.cate.dbo;
+package com.dragon.cate.domain.dbo.user;
 
 import lombok.Data;
 

@@ -2,7 +2,7 @@ package com.dragon.cate.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dragon.cate.dao.mapper.user.UserMapper;
-import com.dragon.cate.dbo.UserDO;
+import com.dragon.cate.domain.dbo.user.UserDO;
 import com.dragon.cate.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

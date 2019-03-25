@@ -1,7 +1,7 @@
 
 package com.dragon.cate.service.learn;
 
-import com.dragon.cate.shopper.ShopperInfo;
+import com.dragon.cate.domain.shopper.ShopperInfo;
 import com.google.common.collect.Lists;
 
 import java.util.Comparator;

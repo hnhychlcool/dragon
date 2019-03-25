@@ -1,4 +1,4 @@
-package com.dragon.cate.base;
+package com.dragon.cate.domain.base;
 
 import lombok.Getter;
 

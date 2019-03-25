@@ -1,4 +1,4 @@
-package com.dragon.cate.bo;
+package com.dragon.cate.domain.bo;
 
 import lombok.Data;
 

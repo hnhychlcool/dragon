@@ -1,7 +1,7 @@
 package com.dragon.cate.web.controller;
 
-import com.dragon.cate.base.ResponseVO;
-import com.dragon.cate.dao.meta.shopper.ShopperInfoDO;
+import com.dragon.cate.domain.base.ResponseVO;
+import com.dragon.cate.domain.dbo.shopper.ShopperInfoDO;
 import com.dragon.cate.service.ShopperService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

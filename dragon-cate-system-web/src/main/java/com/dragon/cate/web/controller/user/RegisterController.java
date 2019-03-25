@@ -1,6 +1,6 @@
 package com.dragon.cate.web.controller.user;
 
-import com.dragon.cate.base.ResponseVO;
+import com.dragon.cate.domain.base.ResponseVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

@@ -1,10 +1,9 @@
 package com.dragon.cate.web.controller.user;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dragon.cate.base.ResponseVO;
-import com.dragon.cate.dbo.UserDO;
+import com.dragon.cate.domain.base.ResponseVO;
+import com.dragon.cate.domain.dbo.user.UserDO;
 import com.dragon.cate.service.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +39,7 @@ public class UserController {
         String email = user.getString("email");
         String phone = user.getString("phone");
         String password = user.getString("password");
-        Assert.isTrue(!StringUtils.isEmpty(name) || !StringUtils.isEmpty(email) || !StringUtils.isEmpty(phone), "用户名/邮箱/手机 内容不能为空");
+        Assert.isTrue(!StringUtils.isEmpty(name) || !StringUtils.isEmpty(email) || !StringUtils.isEmpty(phone), "用户名/邮箱/手机 内容不能都为空");
         Assert.isTrue(!StringUtils.isEmpty(password), "用户密码不能为空");
         UserDO existedUser = userService.queryByCondition(user);
         Assert.notNull(existedUser, "输入的用户不存在");
@@ -51,9 +50,8 @@ public class UserController {
 
     @RequestMapping("signIn")
     @ResponseBody
-    public Object signIn(@RequestBody JSONObject user) {
-        UserDO userDO = new UserDO();
-        BeanUtils.copyProperties(user, userDO);
+    public Object signIn(@RequestBody JSONObject jsonObject) {
+        UserDO userDO = jsonObject.toJavaObject(UserDO.class);
         userService.insert(userDO);
         return ResponseVO.success();
     }
