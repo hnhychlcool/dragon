@@ -4,9 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.dragon.cate.domain.base.ResponseVO;
 import com.dragon.cate.domain.dbo.user.UserDO;
 import com.dragon.cate.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 
@@ -16,21 +20,18 @@ import javax.annotation.Resource;
  * @author chl
  * @since 2019-03-21 11:24:08
  */
-@RestController
-@RequestMapping("user")
+@Controller
+@RequestMapping("/user")
 public class UserController {
-    /**
-     * 服务对象
-     */
+
     @Resource
     private UserService userService;
 
-    /**
-     */
     @GetMapping("selectOne")
     public UserDO selectOne(Long id) {
         return this.userService.queryById(id);
     }
+
 
     @RequestMapping("logIn")
     @ResponseBody

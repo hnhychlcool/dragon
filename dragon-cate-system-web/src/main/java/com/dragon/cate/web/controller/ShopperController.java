@@ -26,10 +26,10 @@ public class ShopperController {
         return ResponseVO.success();
     }
 
-    @RequestMapping("index")
+    @RequestMapping(value = "index")
     @ResponseBody
     public Object index() {
-        return "hello, my own first web site";
+        return "hello, world";
     }
 
 }
