@@ -18,7 +18,6 @@ import javax.annotation.Resource;
 @RequestMapping("department")
 public class DepartmentController {
 
-
     @Resource
     private DepartmentService departmentService;
 

@@ -7,10 +7,7 @@ import com.dragon.cate.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -33,7 +30,7 @@ public class UserController {
     }
 
 
-    @RequestMapping("logIn")
+    @RequestMapping(value = "logIn", method = RequestMethod.POST)
     @ResponseBody
     public Object logIn(@RequestBody JSONObject user) {
         String name = user.getString("name");
@@ -49,7 +46,7 @@ public class UserController {
         return ResponseVO.success();
     }
 
-    @RequestMapping("signIn")
+    @RequestMapping(value = "signIn", method = RequestMethod.POST)
     @ResponseBody
     public Object signIn(@RequestBody JSONObject jsonObject) {
         UserDO userDO = jsonObject.toJavaObject(UserDO.class);
