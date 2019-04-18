@@ -1,0 +1,27 @@
+package com.dragon.cate.service.impl;
+
+import com.dragon.cate.dao.mapper.interesting.InterestingGroupLevelMapper;
+import com.dragon.cate.domain.dbo.interesting.InterestingGroupLevel;
+import com.dragon.cate.service.InterestingGroupLevelService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+/**
+ * 兴趣小组级别表(InterestingGroupLevel)表控制层
+ *
+ * @author chl
+ * @since 2019-04-17 19:24:29
+ */
+@Service("interestingGroupLevelService")
+public class InterestingGroupLevelServiceImpl implements InterestingGroupLevelService {
+    
+    @Resource
+    private InterestingGroupLevelMapper interestingGroupLevelMapper;
+
+    @Override
+    public InterestingGroupLevel queryById(Long id) {
+        return this.interestingGroupLevelMapper.queryById(id);
+    }
+
+}
