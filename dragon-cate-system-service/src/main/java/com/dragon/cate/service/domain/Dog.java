@@ -9,6 +9,8 @@ public class Dog extends Animal {
 
     private String smellAbility;
 
+    private String a;
+
 
     public void wangwangwang() {
         System.out.println("dog voice: wang wang wang...");
