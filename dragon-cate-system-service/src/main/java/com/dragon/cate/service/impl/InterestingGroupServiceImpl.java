@@ -29,4 +29,9 @@ public class InterestingGroupServiceImpl implements InterestingGroupService {
         return interestingGroupMapper.insert(interestingGroupDO);
     }
 
+    @Override
+    public InterestingGroupDO queryByName(String name) {
+        return interestingGroupMapper.queryByName(name);
+    }
+
 }

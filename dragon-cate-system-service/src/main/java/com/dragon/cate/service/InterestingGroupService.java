@@ -12,4 +12,5 @@ public interface InterestingGroupService {
 
     int addInterestingGroup(InterestingGroupDO interestingGroupDO);
 
+    InterestingGroupDO queryByName(String name);
 }

@@ -4,11 +4,12 @@
 <mapper namespace="com.dragon.cate.dao.mapper.interesting.InterestingGroupLevelMapper">
 
     <sql id="TABLE_NAME">
-        dragon.interesting_group_level
+        interesting_group_level
     </sql>
 
     <resultMap type="com.dragon.cate.domain.dbo.interesting.InterestingGroupLevelDO" id="InterestingGroupLevelMap">
         <result property="id" column="id"/>
+        <result property="levelSeq" column="level_seq"/>
         <result property="name" column="name"/>
         <result property="touchCount" column="touch_count"/>
         <result property="icon" column="icon"/>
@@ -19,7 +20,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="InterestingGroupLevelMap">
         select
-        id, name, touch_count, icon, create_time, update_time from
+        * from
         <include refid="TABLE_NAME"/>
         where id = #{id}
     </select>
@@ -27,7 +28,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="InterestingGroupLevelMap">
         select
-        id, name, touch_count, icon, create_time, update_time from
+        * from
         <include refid="TABLE_NAME"/>
         limit #{offset}, #{limit}
     </select>
@@ -35,11 +36,14 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="InterestingGroupLevelMap">
         select
-        id, name, touch_count, icon, create_time, update_time from
+        * from
         <include refid="TABLE_NAME"/>
         <where>
             <if test="id != null">
                 and id = #{id}
+            </if>
+            <if test="levelSeq != null and levelSeq >0">
+                and level_seq = #{levelSeq}
             </if>
             <if test="name != null and name != ''">
                 and name = #{name}
@@ -53,9 +57,6 @@
             <if test="createTime != null">
                 and create_time = #{createTime}
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
-            </if>
         </where>
     </select>
 
@@ -64,13 +65,13 @@
         insert into
         <include refid="TABLE_NAME"/>
         (name
+        , level_seq
         , touch_count
         , icon
         , create_time
-        , update_time
         )
         values
-        (#{name}, #{touchCount}, #{icon}, #{createTime}, #{updateTime})
+        (#{name}, #{levelSeq}, #{touchCount}, #{icon}, now())
     </insert>
 
     <!--通过主键修改数据-->
@@ -81,6 +82,9 @@
             <if test="name != null and name != ''">
                 name = #{name},
             </if>
+            <if test="levelSeq != null and levelSeq >0">
+                and level_seq = #{levelSeq}
+            </if>
             <if test="touchCount != null">
                 touch_count = #{touchCount},
             </if>
@@ -89,9 +93,6 @@
             </if>
             <if test="createTime != null">
                 create_time = #{createTime},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
             </if>
         </set>
         where id = #{id}

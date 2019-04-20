@@ -19,5 +19,4 @@ public class InterestingGroupVO implements Serializable{
     //小组简介
     private String groupDesc;
 
-
 }

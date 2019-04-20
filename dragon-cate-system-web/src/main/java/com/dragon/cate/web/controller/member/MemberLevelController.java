@@ -2,7 +2,7 @@ package com.dragon.cate.web.controller.member;
 
 import org.springframework.stereotype.Controller;
 
-@Controller("memberController")
+@Controller("web/memberController")
 public class MemberLevelController {
 
 

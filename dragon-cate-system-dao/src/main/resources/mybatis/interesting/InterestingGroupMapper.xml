@@ -59,6 +59,13 @@
         </where>
     </select>
 
+    <select id="queryByName" resultType="com.dragon.cate.domain.dbo.interesting.InterestingGroupDO">
+        SELECT * FROM
+        <include refid="TABLE_NAME"/>
+        WHERE name = #{name}
+        limit 1;
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into

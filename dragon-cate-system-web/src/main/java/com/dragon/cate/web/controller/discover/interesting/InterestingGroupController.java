@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @since 2019-04-20 12:20:11
  */
 @RestController
-@RequestMapping("interestingGroup")
+@RequestMapping("web/interestingGroup")
 public class InterestingGroupController {
     /**
      * 服务对象
@@ -40,6 +40,16 @@ public class InterestingGroupController {
     @GetMapping("queryById")
     public InterestingGroupDO queryById(long id) {
         return this.interestingGroupService.queryById(id);
+    }
+
+
+    /**
+     * @param name 兴趣群名称
+     * @return 单条数据
+     */
+    @GetMapping("queryByName")
+    public InterestingGroupDO queryByName(String name) {
+        return this.interestingGroupService.queryByName(name);
     }
 
 }

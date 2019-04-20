@@ -17,6 +17,8 @@ public class InterestingGroupLevelDO implements Serializable {
     private static final long serialVersionUID = -20630377163374853L;
     
     private Long id;
+
+    private int levelSeq;
     //等级名称
     private String name;
     //等级所需积分

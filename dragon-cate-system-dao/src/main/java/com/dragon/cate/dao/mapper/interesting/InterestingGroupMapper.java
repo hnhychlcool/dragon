@@ -65,4 +65,5 @@ public interface InterestingGroupMapper {
      */
     int deleteById(Object id);
 
+    InterestingGroupDO queryByName(String name);
 }

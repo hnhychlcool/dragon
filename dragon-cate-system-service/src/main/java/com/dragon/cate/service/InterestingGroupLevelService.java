@@ -1,6 +1,7 @@
 package com.dragon.cate.service;
 
 import com.dragon.cate.domain.dbo.interesting.InterestingGroupLevelDO;
+import com.dragon.cate.domain.vo.InterestingGroupLevelVO;
 
 /**
  * @author chl
@@ -10,4 +11,5 @@ public interface InterestingGroupLevelService {
     
     InterestingGroupLevelDO queryById(Long id);
 
+    int addInterestingGroupLevel(InterestingGroupLevelVO interestingGroupLevelVO);
 }

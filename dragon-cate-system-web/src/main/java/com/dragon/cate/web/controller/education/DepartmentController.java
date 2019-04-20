@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @since 2019-03-25 10:50:51
  */
 @RestController
-@RequestMapping("department")
+@RequestMapping("web/department")
 public class DepartmentController {
 
     @Resource

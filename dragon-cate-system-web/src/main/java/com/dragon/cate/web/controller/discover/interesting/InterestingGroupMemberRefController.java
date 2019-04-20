@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @since 2019-04-20 12:20:55
  */
 @RestController
-@RequestMapping("interestingGroupMemberRef")
+@RequestMapping("web/interestingGroupMemberRef")
 public class InterestingGroupMemberRefController {
     /**
      * 服务对象

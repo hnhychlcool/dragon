@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class InterestingGroupLevelVO implements Serializable {
 
     private Long id;
+
+    private int levelSeq;
     //等级名称
     private String name;
     //等级所需积分
