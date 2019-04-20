@@ -6,13 +6,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 兴趣小组级别表(InterestingGroupLevel)实体类
+ * 兴趣小组级别表(InterestingGroupLevelDO)实体类
  *
  * @author chl
  * @since 2019-04-17 19:11:53
  */
 @Data
-public class InterestingGroupLevel implements Serializable {
+public class InterestingGroupLevelDO implements Serializable {
 
     private static final long serialVersionUID = -20630377163374853L;
     

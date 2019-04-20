@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS `department`;
+DROP TABLE IF EXISTS `interesting_group_member_ref`;
 CREATE TABLE interesting_group_member_ref (
  `id` BIGINT NOT NULL AUTO_INCREMENT,
  `group_id` BIGINT NOT NULL COMMENT  '兴趣组id',

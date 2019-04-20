@@ -7,7 +7,7 @@
         dragon.interesting_group_level
     </sql>
 
-    <resultMap type="com.dragon.cate.domain.dbo.interesting.InterestingGroupLevel" id="InterestingGroupLevelMap">
+    <resultMap type="com.dragon.cate.domain.dbo.interesting.InterestingGroupLevelDO" id="InterestingGroupLevelMap">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="touchCount" column="touch_count"/>

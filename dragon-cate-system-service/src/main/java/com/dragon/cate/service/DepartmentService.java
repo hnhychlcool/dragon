@@ -1,6 +1,6 @@
 package com.dragon.cate.service;
 
-import com.dragon.cate.domain.dbo.education.Department;
+import com.dragon.cate.domain.dbo.education.DepartmentDO;
 
 /**
  * @author chl
@@ -8,8 +8,8 @@ import com.dragon.cate.domain.dbo.education.Department;
  */
 public interface DepartmentService {
     
-    Department queryById(Long id);
+    DepartmentDO queryById(Long id);
 
-    int addDepartment(Department department);
+    int addDepartment(DepartmentDO departmentDO);
 
 }
