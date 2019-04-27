@@ -24,15 +24,15 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @GetMapping("selectOne")
-    public UserDO selectOne(Long id) {
+    @GetMapping("queryById")
+    public UserDO queryById(long id) {
         return this.userService.queryById(id);
     }
 
 
     @RequestMapping(value = "logIn", method = RequestMethod.POST)
     @ResponseBody
-    public Object logIn(@RequestBody JSONObject user) {
+    public ResponseVO logIn(@RequestBody JSONObject user) {
         String name = user.getString("name");
         String email = user.getString("email");
         String phone = user.getString("phone");
@@ -48,7 +48,7 @@ public class UserController {
 
     @RequestMapping(value = "signIn", method = RequestMethod.POST)
     @ResponseBody
-    public Object signIn(@RequestBody JSONObject jsonObject) {
+    public ResponseVO signIn(@RequestBody JSONObject jsonObject) {
         UserDO userDO = jsonObject.toJavaObject(UserDO.class);
         userService.insert(userDO);
         return ResponseVO.success();

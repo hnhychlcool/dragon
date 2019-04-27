@@ -40,5 +40,4 @@ public class TopicVO implements Serializable {
 
     private LocalDateTime createTime;
 
-    private LocalDateTime updateTime;
 }

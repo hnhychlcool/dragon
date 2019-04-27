@@ -99,7 +99,7 @@
         )
         values
         (#{groupId}, #{userId}, #{name}, #{shortTips}, #{groupDesc}, #{groupCategory}, #{visitCount}, #{messageCount},
-        #{createTime}, #{updateTime})
+        now(), now())
     </insert>
 
     <!--通过主键修改数据-->
@@ -130,12 +130,6 @@
             </if>
             <if test="messageCount != null">
                 message_count = #{messageCount},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
             </if>
         </set>
         where id = #{id}

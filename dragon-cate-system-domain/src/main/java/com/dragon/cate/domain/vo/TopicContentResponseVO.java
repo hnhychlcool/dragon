@@ -26,6 +26,4 @@ public class TopicContentResponseVO implements Serializable {
 
     private LocalDateTime createTime;
 
-    private LocalDateTime updateTime;
-
 }

@@ -28,6 +28,4 @@ public class TopicContentVO implements Serializable {
     private List<TopicContentResponseVO> contentResponseVOList;
 
     private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
 }

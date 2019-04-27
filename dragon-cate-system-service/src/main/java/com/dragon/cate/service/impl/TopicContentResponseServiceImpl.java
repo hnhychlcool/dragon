@@ -2,6 +2,7 @@ package com.dragon.cate.service.impl;
 
 import com.dragon.cate.dao.mapper.interesting.TopicContentResponseMapper;
 import com.dragon.cate.domain.dbo.interesting.TopicContentResponseDO;
+import com.dragon.cate.domain.param.interesting.TopicContentResponseParam;
 import com.dragon.cate.domain.vo.TopicContentResponseVO;
 import com.dragon.cate.service.TopicContentResponseService;
 import com.google.common.collect.Lists;
@@ -14,7 +15,6 @@ import java.util.List;
 
 /**
  * 话题内容回帖表(TopicContentResponse)表控制层
- *
  * @author chl
  * @since 2019-04-27 10:21:22
  */
@@ -45,5 +45,12 @@ public class TopicContentResponseServiceImpl implements TopicContentResponseServ
             topicContentResponseVOS.add(topicContentResponseVO);
         });
         return topicContentResponseVOS;
+    }
+
+    @Override
+    public int createTopicContentResponse(TopicContentResponseParam topicContentResponseParam) {
+        TopicContentResponseDO topicContentResponseDO = new TopicContentResponseDO();
+        BeanUtils.copyProperties(topicContentResponseParam, topicContentResponseDO);
+        return topicContentResponseMapper.insert(topicContentResponseDO);
     }
 }

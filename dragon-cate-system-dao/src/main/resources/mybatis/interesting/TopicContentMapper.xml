@@ -64,13 +64,10 @@
             <if test="createTime != null">
                 and create_time = #{createTime}
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
-            </if>
         </where>
     </select>
 
-    <select id="queryByTopicId" resultType="com.dragon.cate.domain.dbo.interesting.TopicContentDO">
+    <select id="queryByTopicId" resultMap="TopicContentMap">
         select
         *
         from
@@ -91,7 +88,7 @@
         , update_time
         )
         values
-        (#{topicId}, #{userId}, #{topicContent}, #{goodCount}, #{badCount}, #{createTime}, #{updateTime})
+        (#{topicId}, #{userId}, #{topicContent}, #{goodCount}, #{badCount},now(),now())
     </insert>
 
     <!--通过主键修改数据-->
@@ -113,12 +110,6 @@
             </if>
             <if test="badCount != null">
                 bad_count = #{badCount},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
             </if>
         </set>
         where id = #{id}

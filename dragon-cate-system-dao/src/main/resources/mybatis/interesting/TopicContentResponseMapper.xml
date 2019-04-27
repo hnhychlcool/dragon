@@ -56,13 +56,10 @@
             <if test="createTime != null">
                 and create_time = #{createTime}
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
-            </if>
         </where>
     </select>
 
-    <select id="queryByContentId" resultType="com.dragon.cate.domain.dbo.interesting.TopicContentResponseDO">
+    <select id="queryByContentId" resultMap="TopicContentResponseMap">
         SELECT * FROM
         <include refid="TABLE_NAME"/>
         WHERE topic_content_id = #{topicContentId}
@@ -79,7 +76,7 @@
         , update_time
         )
         values
-        (#{topicContentId}, #{userId}, #{leavingMessage}, #{createTime}, #{updateTime})
+        (#{topicContentId}, #{userId}, #{leavingMessage}, now(), now())
     </insert>
 
     <!--通过主键修改数据-->
@@ -95,12 +92,6 @@
             </if>
             <if test="leavingMessage != null and leavingMessage != ''">
                 leaving_message = #{leavingMessage},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
             </if>
         </set>
         where id = #{id}

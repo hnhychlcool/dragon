@@ -1,5 +1,6 @@
 package com.dragon.cate.service;
 
+import com.dragon.cate.domain.param.interesting.TopicContentParam;
 import com.dragon.cate.domain.vo.TopicContentVO;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface TopicContentService {
 
     List<TopicContentVO> queryByTopicId(long id);
 
+    int createTopicContent(TopicContentParam topicParam);
 }
