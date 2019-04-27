@@ -2,9 +2,9 @@ package com.dragon.cate.service.impl;
 
 import com.dragon.cate.dao.mapper.interesting.TopicMapper;
 import com.dragon.cate.domain.dbo.interesting.TopicDO;
+import com.dragon.cate.domain.param.interesting.TopicParam;
 import com.dragon.cate.domain.vo.TopicContentVO;
 import com.dragon.cate.domain.vo.TopicVO;
-import com.dragon.cate.service.TopicContentResponseService;
 import com.dragon.cate.service.TopicContentService;
 import com.dragon.cate.service.TopicService;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +37,13 @@ public class TopicServiceImpl implements TopicService {
         BeanUtils.copyProperties(topicDO, topicVO);
         topicVO.setTopicContentVOList(topicContentVOS);
         return topicVO;
+    }
+
+    @Override
+    public int createTopic(TopicParam topicParam) {
+        TopicDO topicDO = new TopicDO();
+        BeanUtils.copyProperties(topicParam, topicDO);
+        return topicMapper.insert(topicDO);
     }
 
 }

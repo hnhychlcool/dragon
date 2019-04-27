@@ -1,5 +1,6 @@
 package com.dragon.cate.service;
 
+import com.dragon.cate.domain.param.interesting.TopicParam;
 import com.dragon.cate.domain.vo.TopicVO;
 
 /**
@@ -10,4 +11,5 @@ public interface TopicService {
 
     TopicVO queryById(long id);
 
+    int createTopic(TopicParam topicParam);
 }

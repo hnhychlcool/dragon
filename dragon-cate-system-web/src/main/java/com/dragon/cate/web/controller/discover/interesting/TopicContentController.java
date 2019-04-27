@@ -1,6 +1,7 @@
 package com.dragon.cate.web.controller.discover.interesting;
 
-import com.dragon.cate.domain.dbo.interesting.TopicContentDO;
+import com.dragon.cate.domain.base.ResponseVO;
+import com.dragon.cate.domain.vo.TopicContentVO;
 import com.dragon.cate.service.TopicContentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ import javax.annotation.Resource;
  * @since 2019-04-27 10:16:57
  */
 @RestController
-@RequestMapping("topicContent")
+@RequestMapping("web/topicContent")
 public class TopicContentController {
     /**
      * 服务对象
@@ -29,9 +30,10 @@ public class TopicContentController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
-    public TopicContentDO queryById(Object id) {
-        return this.topicContentService.queryById(id);
+    @GetMapping("queryById")
+    public ResponseVO queryById(long id) {
+        TopicContentVO topicContentVO = this.topicContentService.queryById(id);
+        return ResponseVO.success(topicContentVO);
     }
 
 }

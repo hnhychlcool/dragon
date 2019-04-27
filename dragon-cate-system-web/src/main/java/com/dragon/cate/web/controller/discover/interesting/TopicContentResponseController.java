@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @since 2019-04-27 10:21:45
  */
 @RestController
-@RequestMapping("topicContentResponse")
+@RequestMapping("web/topicContentResponse")
 public class TopicContentResponseController {
     /**
      * 服务对象
