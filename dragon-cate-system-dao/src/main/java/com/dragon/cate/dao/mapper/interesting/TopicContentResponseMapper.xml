@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dragon.cate.dao.mapper.interesting.TopicContentResponseMapper">
+
+    <sql id="TABLE_NAME">
+        dragon.topic_content_response
+    </sql>
+
+    <resultMap type="com.dragon.cate.domain.dbo.interesting.TopicContentResponseDO" id="TopicContentResponseMap">
+        <result property="id" column="id"/>
+        <result property="topicContentId" column="topic_content_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="leavingMessage" column="leaving_message"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TopicContentResponseMap">
+        select
+        *
+        from
+        <include refid="TABLE_NAME"/>
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TopicContentResponseMap">
+        select
+        *
+        from
+        <include refid="TABLE_NAME"/>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TopicContentResponseMap">
+        select
+        *
+        from
+        <include refid="TABLE_NAME"/>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="topicContentId != null">
+                and topic_content_id = #{topicContentId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="leavingMessage != null and leavingMessage != ''">
+                and leaving_message = #{leavingMessage}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByContentId" resultType="com.dragon.cate.domain.dbo.interesting.TopicContentResponseDO">
+        SELECT * FROM
+        <include refid="TABLE_NAME"/>
+        WHERE topic_content_id = #{topicContentId}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into
+        <include refid="TABLE_NAME"/>
+        (topic_content_id
+        , user_id
+        , leaving_message
+        , create_time
+        , update_time
+        )
+        values
+        (#{topicContentId}, #{userId}, #{leavingMessage}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update
+        <include refid="TABLE_NAME"/>
+        <set>
+            <if test="topicContentId != null">
+                topic_content_id = #{topicContentId},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="leavingMessage != null and leavingMessage != ''">
+                leaving_message = #{leavingMessage},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from
+        <include refid="TABLE_NAME"/>
+        where id = #{id}
+    </delete>
+
+</mapper>

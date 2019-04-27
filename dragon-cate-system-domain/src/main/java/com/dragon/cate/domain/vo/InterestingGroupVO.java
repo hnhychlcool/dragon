@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class InterestingGroupVO implements Serializable{
 
     private Long id;
-    //学校id
+    //学校id, 后面可以关联到city_id
     private Long schoolId;
     //小组名称
     private String name;
@@ -18,5 +18,8 @@ public class InterestingGroupVO implements Serializable{
     private String title;
     //小组简介
     private String groupDesc;
+
+    //小组分类
+    private int groupCategory;
 
 }

@@ -27,6 +27,9 @@ public class InterestingGroupDO implements Serializable {
     //小组简介
     private String groupDesc;
 
+    // 兴趣组分类,关联分类信息的最细分的一级
+    private int groupCategory;
+
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;

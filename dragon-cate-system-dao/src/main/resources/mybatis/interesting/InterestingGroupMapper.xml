@@ -14,12 +14,13 @@
         <result property="icon" column="icon"/>
         <result property="title" column="title"/>
         <result property="groupDesc" column="group_desc"/>
+        <result property="groupCategory" column="group_category"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="InterestingGroupMap">
         select
-        id, school_id, name, icon, title, group_desc from
+        * from
         <include refid="TABLE_NAME"/>
         where id = #{id}
     </select>
@@ -27,7 +28,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="InterestingGroupMap">
         select
-        id, school_id, name, icon, title, group_desc from
+        * from
         <include refid="TABLE_NAME"/>
         limit #{offset}, #{limit}
     </select>
@@ -35,7 +36,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="InterestingGroupMap">
         select
-        id, school_id, name, icon, title, group_desc from
+        * from
         <include refid="TABLE_NAME"/>
         <where>
             <if test="id != null">
@@ -56,6 +57,9 @@
             <if test="group_desc != null and group_desc != ''">
                 and group_desc = #{groupDesc}
             </if>
+            <if test="group_category != null">
+                and group_category = #{groupCategory}
+            </if>
         </where>
     </select>
 
@@ -75,9 +79,10 @@
         , icon
         , title
         , group_desc
+        , group_category
         )
         values
-        (#{schoolId}, #{name}, #{icon}, #{title}, #{groupDesc})
+        (#{schoolId}, #{name}, #{icon}, #{title}, #{groupDesc}, #{groupCategory})
     </insert>
 
     <!--通过主键修改数据-->

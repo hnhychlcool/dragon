@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `school`;
 CREATE TABLE school (
-`id` BIGINT NOT NULL AUTO_INCREMENT,
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 `name` varchar(100) NOT NULL COMMENT '学校名称',
 `enrollment_year` int NOT NULL COMMENT '入学年份',
 `graduation_year` int NOT NULL COMMENT '毕业年份',
