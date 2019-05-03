@@ -33,6 +33,21 @@ public class TopicContentResponseServiceImpl implements TopicContentResponseServ
     }
 
     @Override
+    public int deleteById(long id) {
+        return topicContentResponseMapper.deleteById(id);
+    }
+
+    @Override
+    public int deleteByTopicId(long topicId) {
+        return topicContentResponseMapper.deleteByTopicId(topicId);
+    }
+
+    @Override
+    public int deleteByTopicContentId(long topicContentId) {
+        return topicContentResponseMapper.deleteByTopicContentId(topicContentId);
+    }
+
+    @Override
     public List<TopicContentResponseVO> queryByContentId(long contentId) {
         List<TopicContentResponseDO> topicContentResponseDOS = topicContentResponseMapper.queryByContentId(contentId);
         List<TopicContentResponseVO> topicContentResponseVOS = Lists.newArrayList();

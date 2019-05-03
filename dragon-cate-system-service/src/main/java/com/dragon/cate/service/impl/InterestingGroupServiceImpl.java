@@ -21,7 +21,7 @@ public class InterestingGroupServiceImpl implements InterestingGroupService {
 
     @Override
     public InterestingGroupDO queryById(Object id) {
-        return this.interestingGroupMapper.queryById(id);
+        return interestingGroupMapper.queryById(id);
     }
 
     @Override

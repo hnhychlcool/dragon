@@ -1,5 +1,6 @@
 CREATE TABLE topic_content_response (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `topic_id` INT UNSIGNED NOT NULL COMMENT '所属话题id',
   `topic_content_id` INT UNSIGNED NOT NULL COMMENT '所属话题内容id',
   `user_id` INT UNSIGNED NOT NULL COMMENT '回帖人id',
   `leaving_message` TEXT COMMENT '回帖内容',

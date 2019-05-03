@@ -123,4 +123,12 @@
         where id = #{id}
     </delete>
 
+    <!--根据topicId删除记录-->
+    <delete id="deleteByTopicId">
+        delete
+        from
+        <include refid="TABLE_NAME"/>
+        where topic_id = #{topicId}
+    </delete>
+
 </mapper>

@@ -7,6 +7,8 @@ import java.io.Serializable;
 @Data
 public class TopicContentResponseParam implements Serializable {
 
+    // 所属top
+    private long topicId;
     // 所属top content
     private long topicContentId;
 

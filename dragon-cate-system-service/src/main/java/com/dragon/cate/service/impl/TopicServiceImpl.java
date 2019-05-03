@@ -5,10 +5,12 @@ import com.dragon.cate.domain.dbo.interesting.TopicDO;
 import com.dragon.cate.domain.param.interesting.TopicParam;
 import com.dragon.cate.domain.vo.TopicContentVO;
 import com.dragon.cate.domain.vo.TopicVO;
+import com.dragon.cate.service.TopicContentResponseService;
 import com.dragon.cate.service.TopicContentService;
 import com.dragon.cate.service.TopicService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
@@ -27,6 +29,8 @@ public class TopicServiceImpl implements TopicService {
     private TopicMapper topicMapper;
     @Resource
     private TopicContentService topicContentService;
+    @Resource
+    private TopicContentResponseService topicContentResponseService;
 
     @Override
     public TopicVO queryById(long id) {
@@ -44,6 +48,15 @@ public class TopicServiceImpl implements TopicService {
         TopicDO topicDO = new TopicDO();
         BeanUtils.copyProperties(topicParam, topicDO);
         return topicMapper.insert(topicDO);
+    }
+
+    @Transactional
+    @Override
+    public int deleteById(long topicId) {
+        topicMapper.deleteById(topicId);
+        topicContentService.deleteByTopicId(topicId);
+        topicContentResponseService.deleteByTopicId(topicId);
+        return 1;
     }
 
 }

@@ -12,4 +12,6 @@ public interface TopicService {
     TopicVO queryById(long id);
 
     int createTopic(TopicParam topicParam);
+
+    int deleteById(long id);
 }
