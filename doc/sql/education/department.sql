@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `departmentDO`;
-CREATE TABLE departmentDO (
+DROP TABLE IF EXISTS `department`;
+CREATE TABLE department (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 `school_id` INT UNSIGNED NOT NULL COMMENT  '所属学校id',
 `name` varchar(100) NOT NULL COMMENT '院系名称',

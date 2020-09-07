@@ -34,7 +34,7 @@ public class TopicContentController {
      */
     @GetMapping("queryById")
     public ResponseVO queryById(long id) {
-        TopicContentVO topicContentVO = this.topicContentService.queryById(id);
+        TopicContentVO topicContentVO = topicContentService.queryById(id);
         return ResponseVO.success(topicContentVO);
     }
 
