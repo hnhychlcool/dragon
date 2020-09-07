@@ -19,7 +19,7 @@ public interface TopicMapper {
      * @param id 主键
      * @return 实例对象
      */
-    TopicDO queryById(Object id);
+    TopicDO queryById(long id);
 
     /**
      * 查询指定行数据
@@ -61,6 +61,6 @@ public interface TopicMapper {
      * @param id 主键
      * @return 影响行数
      */
-    int deleteById(Object id);
+    int deleteById(long id);
 
 }

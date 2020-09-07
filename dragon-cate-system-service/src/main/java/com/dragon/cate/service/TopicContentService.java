@@ -13,6 +13,10 @@ public interface TopicContentService {
 
     TopicContentVO queryById(long id);
 
+    int deleteById(long id);
+
+    int deleteByTopicId(long topicId);
+
     List<TopicContentVO> queryByTopicId(long id);
 
     int createTopicContent(TopicContentParam topicParam);

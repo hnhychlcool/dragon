@@ -19,13 +19,13 @@ public interface TopicContentResponseMapper {
      * @param id 主键
      * @return 实例对象
      */
-    TopicContentResponseDO queryById(Object id);
+    TopicContentResponseDO queryById(long id);
 
     /**
      * 查询指定行数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     List<TopicContentResponseDO> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
@@ -61,7 +61,11 @@ public interface TopicContentResponseMapper {
      * @param id 主键
      * @return 影响行数
      */
-    int deleteById(Object id);
+    int deleteById(long id);
+
+    int deleteByTopicId(long topicId);
+
+    int deleteByTopicContentId(long topicContentId);
 
     List<TopicContentResponseDO> queryByContentId(long contentId);
 }

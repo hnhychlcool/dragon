@@ -4,6 +4,7 @@ import com.dragon.cate.domain.base.ResponseVO;
 import com.dragon.cate.domain.param.interesting.TopicParam;
 import com.dragon.cate.domain.vo.TopicVO;
 import com.dragon.cate.service.TopicService;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,6 +41,14 @@ public class TopicController {
     @GetMapping("queryById")
     public TopicVO queryById(long id) {
         return this.topicService.queryById(id);
+    }
+
+    @RequestMapping(value = "deleteById", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseVO deleteById(long id) {
+        Assert.isTrue(id>0, "请输入正确的id");
+        topicService.deleteById(id);
+        return ResponseVO.success();
     }
 
 }

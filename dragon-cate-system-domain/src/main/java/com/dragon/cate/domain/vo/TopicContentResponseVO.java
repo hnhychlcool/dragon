@@ -15,6 +15,8 @@ public class TopicContentResponseVO implements Serializable {
 
     private long id;
 
+    // 所属top
+    private long topicId;
     // 所属top content
     private long topicContentId;
 

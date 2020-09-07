@@ -42,6 +42,16 @@ public class TopicContentServiceImpl implements TopicContentService {
     }
 
     @Override
+    public int deleteById(long id) {
+        return topicContentMapper.deleteById(id);
+    }
+
+    @Override
+    public int deleteByTopicId(long topicId) {
+        return topicContentMapper.deleteByTopicId(topicId);
+    }
+
+    @Override
     public List<TopicContentVO> queryByTopicId(long id) {
         List<TopicContentDO> topicContentDOList = topicContentMapper.queryByTopicId(id);
         if (CollectionUtils.isEmpty(topicContentDOList)) {

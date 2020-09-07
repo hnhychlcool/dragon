@@ -9,6 +9,7 @@
 
     <resultMap type="com.dragon.cate.domain.dbo.interesting.TopicContentResponseDO" id="TopicContentResponseMap">
         <result property="id" column="id"/>
+        <result property="topicId" column="topic_id"/>
         <result property="topicContentId" column="topic_content_id"/>
         <result property="userId" column="user_id"/>
         <result property="leavingMessage" column="leaving_message"/>
@@ -69,14 +70,16 @@
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into
         <include refid="TABLE_NAME"/>
-        (topic_content_id
+        (
+        topic_id
+        , topic_content_id
         , user_id
         , leaving_message
         , create_time
         , update_time
         )
         values
-        (#{topicContentId}, #{userId}, #{leavingMessage}, now(), now())
+        (#{topicId}, #{topicContentId}, #{userId}, #{leavingMessage}, now(), now())
     </insert>
 
     <!--通过主键修改数据-->
@@ -84,9 +87,6 @@
         update
         <include refid="TABLE_NAME"/>
         <set>
-            <if test="topicContentId != null">
-                topic_content_id = #{topicContentId},
-            </if>
             <if test="userId != null">
                 user_id = #{userId},
             </if>
@@ -103,6 +103,22 @@
         from
         <include refid="TABLE_NAME"/>
         where id = #{id}
+    </delete>
+
+    <!--通过主键删除-->
+    <delete id="deleteByTopicId">
+        delete
+        from
+        <include refid="TABLE_NAME"/>
+        where topic_id = #{topicId}
+    </delete>
+
+    <!--通过topic content id删除-->
+    <delete id="deleteByTopicContentId">
+        delete
+        from
+        <include refid="TABLE_NAME"/>
+        where topic_content_id = #{topicContentId}
     </delete>
 
 </mapper>
