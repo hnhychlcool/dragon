@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDO queryByCondition(JSONObject condition) {
-        UserDO userDO = new UserDO();
+        UserDO userDO = UserDO.builder().build();
         BeanUtils.copyProperties(condition, userDO);
         return userDao.queryByCondition(userDO);
     }

@@ -1,4 +1,4 @@
-package com.dragon.cate.domain.common;
+package com.dragon.cate.dao;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
