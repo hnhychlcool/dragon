@@ -9,9 +9,34 @@ import org.springframework.util.StringUtils;
 public class LongestPalindrome {
 
 
+    /**
+     * 滑动窗口实现,较简单
+     */
+    public static String simplestLongestPalindrome(String str) {
+        int length = str.length();
+        // 最长回文起点和终点下标
+        int maxStart = 0, maxEnd = 0;
+        // 回文最长长度
+        int maxLen = 1;
+        boolean[][] dp = new boolean[length][length];
+        for (int r = 1; r < length; r++) {
+            // 内侧循环每次以r为中心,从最左侧开始比较2遍字符是否相等确认是否为回文
+            for (int l = 0; l < r; l++) {
+                // 回文边界2端字符相等,同时内部字符也相等,r-l>2,滑动窗口越大,内部已完成相等比较,肯定符合
+                if (str.charAt(r) == str.charAt(l) && (r - l > 2 || dp[l - 1][r + 1])) {
+                    dp[l][l] = true;
+                    if (r - l + 1 > maxLen) {
+                        maxStart = l;
+                        maxEnd = r;
+                        maxLen = r - l + 1;
+                    }
+                }
+            }
+        }
+        return str.substring(maxStart, maxEnd + 1);
+    }
+
     // 回文:正向字符串内容与逆向字符串的内容一样,如S=aba, S'=aba, S=S',aba就是回文
-
-
     public static String aroundCenterLongestPalindrome(String s) {
         if (s == null || s.length() < 1) return "";
         int start = 0, end = 0;
@@ -47,29 +72,29 @@ public class LongestPalindrome {
     public static void main(String[] args) {
 //        String str = "caba";
 //        String str = "abcdcba";
-        String str = "abc";
+        String str = "abcbadef";
+//        String str = "abc";
 
-        String aroundCenterResult = aroundCenterLongestPalindrome(str);
+        String aroundCenterResult = simplestLongestPalindrome(str);
         System.out.println("aroundCenterResult = [" + aroundCenterResult + "]");
 
-        String manacherResult = manacherLongestPalindrome(str);
-        System.out.println("manacherResult = [" + manacherResult + "]");
+//        String manacherResult = manacherLongestPalindrome(str);
+//        System.out.println("manacherResult = [" + manacherResult + "]");
     }
 
 
 
     /*
-    * Manacher's Algorithm 马拉车算法
-    * 解决字符串个数奇偶个数问题(奇数个字符中心位置有n个,偶数个字符中心位置有n-1个),通过对字符串添加特殊处理来保证字符串永远是奇数
-    *
-    * 首先我们解决下奇数和偶数的问题，在每个字符间插入 "#"，并且为了使得扩展的过程中，到边界后自动结束
-    * 在两端分别插入 "^" 和 "$"，两个不可能在字符串中出现的字符，这样中心扩展的时候，判断两端字符是否
-    * 相等的时候，如果到了边界就一定会不相等，从而出了循环。经过处理，字符串的长度永远都是奇数了。
-    *   如下处理: n--->n+n+1=2n+1 为奇数个,精妙的设计点
-    *   aba --->  ^ a # b # a $   (一共7个元素)
-    *   ab  --->  ^ a # b $       (一共5个元素)
-    * */
-
+     * Manacher's Algorithm 马拉车算法
+     * 解决字符串个数奇偶个数问题(奇数个字符中心位置有n个,偶数个字符中心位置有n-1个),通过对字符串添加特殊处理来保证字符串永远是奇数
+     *
+     * 首先我们解决下奇数和偶数的问题，在每个字符间插入 "#"，并且为了使得扩展的过程中，到边界后自动结束
+     * 在两端分别插入 "^" 和 "$"，两个不可能在字符串中出现的字符，这样中心扩展的时候，判断两端字符是否
+     * 相等的时候，如果到了边界就一定会不相等，从而出了循环。经过处理，字符串的长度永远都是奇数了。
+     *   如下处理: n--->n+n+1=2n+1 为奇数个,精妙的设计点
+     *   aba --->  ^ a # b # a $   (一共7个元素)
+     *   ab  --->  ^ a # b $       (一共5个元素)
+     * */
 
     public static String preProcess(String s) {
         int n = s.length();

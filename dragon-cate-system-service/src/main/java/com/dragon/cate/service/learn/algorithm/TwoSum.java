@@ -1,6 +1,10 @@
 package com.dragon.cate.service.learn.algorithm;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
+
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的
@@ -11,6 +15,24 @@ import java.util.HashMap;
  * 所以返回 [0, 1]
  */
 public class TwoSum {
+
+
+    /**
+     * @desc 最简单巧妙的方法
+     */
+    public static int[] simplestTwoSum(int[] nums, int target) {
+
+        // key:目标元素,value:目标元素所在下标
+        Map<Integer, Integer> map = Maps.newHashMap();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                return new int[]{map.get(target - nums[i]), i};
+            }
+            map.put(nums[i], i);
+        }
+        throw new IllegalArgumentException("not found two number's index");
+    }
+
 
     /**
      * 暴利法,时间复杂度O(n²),control+command+空格搜索2,输入平方
@@ -60,13 +82,16 @@ public class TwoSum {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{2, 7, 11, 8, 20};
-        int target = 28;
+        int[] arr = new int[]{2, 7, 11, 8, 13, 20};
+        int target = 13;
 
-        int [] index1 = twoSum1(arr, target);
-        int [] index2 = twoSum1(arr, target);
+        int[] index1 = twoSum1(arr, target);
+        int[] index2 = twoSum1(arr, target);
 
-        System.out.println(1/10);
+        System.out.println("target two element index = " + JSON.toJSONString(simplestTwoSum(arr, target)));
+
+
+//        System.out.println(1 / 10);
 
 //        System.out.println("index1 = [" + JSON.toJSONString(index1) + "]");
 //        System.out.println("index2 = [" + JSON.toJSONString(index2) + "]");
